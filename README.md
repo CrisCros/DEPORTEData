@@ -1,4 +1,4 @@
-# 🏗️ DeporteData - Propuesta Gestion Repo
+# DeporteData - Propuesta Gestion Repo
 
 ## Tabla de contenidos
 
