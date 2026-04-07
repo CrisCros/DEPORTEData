@@ -1,9 +1,9 @@
 # Proyecto: Previsión anual de empleo vinculado al deporte  
-**Equipo:** DataSports (Equipo de Análisis de Datos Deportivos)  
+**Equipo:** Sebastian, Silvia, Javier y Dario
 **Fecha:** 7 de abril de 2026  
 
 ## Resumen Ejecutivo  
-Este documento presenta los objetivos y el plan de un proyecto dirigido a **predecir la evolución anual del empleo vinculado al deporte en España**. La relevancia de este tema queda de manifiesto en cifras recientes: la industria deportiva generó 39.117 millones de € (3,3% del PIB) y casi 414.000 empleos en 2018【17†L528-L534】, y en 2025 el empleo deportivo alcanzó 270.200 personas, un 6% más que el año anterior【14†L39-L44】. Ante este crecimiento sostenido, prever su evolución futura es clave para la planificación de políticas públicas y estrategias privadas. Dado el plazo limitado (entrega a finales de abril), el proyecto se centrará en objetivos simples y alcanzables: reunir datos oficiales (EPA del INE gestionada por DEPORTEData【15†L59-L63】), montar un pipeline básico de análisis y emplear métodos de forecasting (ARIMA, Prophet o regresión) para generar predicciones anuales. A continuación se detallan el contexto, objetivos generales y específicos (con criterios de aceptación), alcance y limitaciones, metodología, entregables por sprint, cronograma, riesgos y mitigaciones, requisitos técnicos, criterios de éxito y anexos sugeridos.  
+Este documento presenta los objetivos y el plan de un proyecto dirigido a **predecir la evolución anual del empleo vinculado al deporte en España**. La relevancia de este tema queda de manifiesto en cifras recientes: la industria deportiva generó 39.117 millones de € (3,3% del PIB) y casi 414.000 empleos en 2018【17†L528-L534】, y en 2025 el empleo deportivo alcanzó 270.200 personas, un 6% más que el año anterior【14†L39-L44】. Ante este crecimiento sostenido, prever su evolución futura es clave para la planificación de políticas públicas y estrategias privadas. Dado el plazo limitado, el proyecto se centrará en objetivos simples y alcanzables: reunir datos oficiales (EPA del INE gestionada por DEPORTEData【15†L59-L63】), montar un pipeline básico de análisis y emplear métodos de forecasting (ARIMA, Prophet o regresión) para generar predicciones anuales. A continuación se detallan el contexto, objetivos generales y específicos (con criterios de aceptación), alcance y limitaciones, metodología, entregables por sprint, cronograma, riesgos y mitigaciones, requisitos técnicos, criterios de éxito y anexos sugeridos.  
 
 ## 1. Contexto y motivación  
 - **Importancia económica del deporte:** El sector deportivo es un motor económico relevante. Según un informe de PwC (2018), contribuyó con un 3,3% al PIB de España y con casi 414.000 empleos (~2,1% del empleo total)【17†L528-L534】. Esto refleja que por cada millón de € facturados en este sector se generan 12,4 puestos de trabajo, cifra muy superior a la media nacional.  
@@ -14,7 +14,7 @@ Este documento presenta los objetivos y el plan de un proyecto dirigido a **pred
 Desarrollar un sistema funcional para **predecir la evolución anual del empleo vinculado al deporte en España**, basado en datos oficiales, mediante un modelo de series temporales, y documentar el proceso de forma clara y comprensible.  
 
 ## 3. Objetivos específicos  
-- **Recolectar datos oficiales de empleo deportivo:** Obtener y documentar las series temporales anuales de empleo vinculadas al deporte. *Criterio:* Disponibilidad de fichero(s) con datos EPA (INE) desde 2011 hasta el último año (DEPORTedata【15†L59-L63】) y de cualquier otra fuente oficial relevante (CSD, etc.), en formato CSV validado.  
+- **Recolectar datos oficiales de empleo deportivo:** Obtener y documentar las series temporales anuales de empleo vinculadas al deporte. *Criterio:* Disponibilidad de fichero(s) con datos EPA (INE) desde 2011 hasta el último año (DEPORTedata【15†L59-L63】) y de cualquier otra fuente oficial relevante, en formato CSV validado.  
 - **Diseñar pipeline ETL básico:** Implementar scripts para limpiar, transformar y unificar los datos. *Criterio:* Script en Python que cargue las fuentes (p. ej. CSV), trate valores nulos/erróneos, y genere un dataset consolidado listo para análisis.  
 - **Análisis exploratorio de datos (EDA):** Visualizar la serie histórica y características del empleo deportivo. *Criterio:* Gráficos de tendencias anuales (por ejemplo, línea de tiempo del empleo total) y análisis de patrones relevantes (temporalidad, estacionalidad si la hubiera).  
 - **Desarrollar modelos predictivos:** Entrenar al menos dos modelos de forecasting, por ejemplo ARIMA y Prophet (o regresión lineal de tendencia). *Criterio:* Modelos calibrados con datos de entrenamiento (por ejemplo hasta 2023) y listos para predecir años posteriores.  
@@ -24,16 +24,16 @@ Desarrollar un sistema funcional para **predecir la evolución anual del empleo 
 - **Documentación del proyecto:** Mantener un README y documentación de apoyo. *Criterio:* Entrega de README.md con descripción del proyecto, instrucciones de uso, y archivo de diseño (arquitectura, fuentes); además de anotaciones en el código explicando cada paso.  
 
 ## 4. Alcance y limitaciones  
-- **Ámbito geográfico:** El análisis se centrará en **España** a nivel nacional. Por facilidad y tiempo, no se detallará por Comunidades Autónomas o provincias.  
+- **Ámbito geográfico:** El análisis se centrará en **España** a nivel nacional, no se detallará por Comunidades Autónomas o provincias.  
 - **Frecuencia de datos:** Se utilizarán datos **anuales**. No se profundizará en series trimestrales o mensuales por su menor disponibilidad y complejidad añadida.  
-- **Variables consideradas:** Solo se considerará el **número de empleos vinculados al deporte** (tal como lo define la EPA procesada por DEPORTEData)【14†L39-L44】. No se modelarán explicaciones causales (PIB, población activa, pandemia, etc.) por falta de tiempo.  
-- **Horizonte de predicción:** Se hará una **previsión a corto plazo** (1-2 años). No se abordará forecasting a largo plazo debido a la escasez de datos históricos (EPA deportiva desde 2011) y al plazo del proyecto.  
-- **Complejidad de modelos:** Se priorizarán métodos sencillos y robustos (ARIMA, Prophet). No se implementarán técnicas avanzadas (redes neuronales, aprendizaje profundo) ni se llevará a cabo un ajuste extensivo de hiperparámetros.  
-- **Despliegue:** El alcance principal es analítico. El despliegue en producción (por ejemplo, API pública en la nube) es opcional y simplificado: si se hace, será con contenedores ligeros (Docker) o servicios gratuitos (Heroku/AWS básico) sin infraestructuras complejas.  
+- **Variables consideradas:** Solo se considerará el **número de empleos vinculados al deporte** (tal como lo define la EPA procesada por DEPORTEData). No se modelarán explicaciones causales (PIB, población activa, pandemia, etc.).
+- **Horizonte de predicción:** Se hará una **previsión a corto plazo** (1-2 años). No se abordará forecasting a largo plazo debido a la escasez de datos históricos (EPA deportiva desde 2011) y al plazo del proyecto.
+- **Complejidad de modelos:** Se priorizarán métodos sencillos y robustos (ARIMA, Prophet). No se implementarán técnicas avanzadas (redes neuronales, aprendizaje profundo) ni se llevará a cabo un ajuste extensivo de hiperparámetros.
+- **Despliegue:** El alcance principal es analítico. El despliegue en producción (por ejemplo, API pública en la nube) es opcional y simplificado: si se hace, será con contenedores ligeros (Docker) o servicios gratuitos (Heroku/AWS básico).  
 
 ## 5. Metodología propuesta  
-- **Fuentes de datos:** Se usarán los datos oficiales del **INE (EPA)** elaborados específicamente para el ámbito deportivo【15†L59-L63】. Esto incluye la serie histórica anual del empleo deportivo (disponible en la plataforma DEPORTEData hasta 2025). También se revisarán informes del **CSD** o ministerios relacionados para contrastar información. Cada fuente se registrará en un catálogo (docs/fuentes).  
-- **Pipeline ETL:** En Python (Jupyter Notebook) con librerías como pandas. Se extraerán los datos crudos (CSV u hoja de cálculo), se realizará la limpieza (por ejemplo, tratar valores nulos, unificar nomenclaturas de sectores) y se transformará en un único dataset con variables clave (año, empleo_total, etc.). El resultado será un dataframe anual listo para análisis.  
+- **Fuentes de datos:** Se usarán los datos oficiales del **INE (EPA)** elaborados específicamente para el ámbito deportivo. Esto incluye la serie histórica anual del empleo deportivo (disponible en la plataforma DEPORTEData hasta 2025).  
+- **Pipeline ETL:** En Python con librerías como pandas. Se extraerán los datos crudos (CSV u hoja de cálculo), se realizará la limpieza (por ejemplo, tratar valores nulos, unificar nomenclaturas de sectores) y se transformará en un único dataset con variables clave (año, empleo_total, etc.). El resultado será un dataframe anual listo para análisis.  
 - **Análisis exploratorio:** Uso de gráficos (matplotlib/seaborn). Se explorará la tendencia temporal, posibles cambios bruscos, distribución por categorías (sexo, tiempo parcial/completo, según EPA) si están disponibles. Esto ayudará a entender el comportamiento histórico antes de modelar.  
 - **Modelos de forecasting:** Se aplicarán al menos dos enfoques:  
   - *ARIMA (AutoRegresivo Integrado de Media Móvil):* Modelo estadístico clásico para series temporales, útil cuando la serie es estacionaria o puede estacionarizarse. Permite capturar tendencias lineales y autocorrelaciones.  
@@ -44,49 +44,58 @@ Desarrollar un sistema funcional para **predecir la evolución anual del empleo 
 - **Visualización de resultados:** Se crearán gráficos comparativos (histórico vs predicción). Por ejemplo, un gráfico de líneas que muestre la serie real de empleo deportivo junto con la curva proyectada para los próximos años. Se evaluará también la capacidad de cada modelo para anticipar tendencias recientes.  
 
 ## 6. Entregables mínimos por sprint  
-- **Sprint 1 (Semanas 1-2):**  
+- **Sprint 1:**  
   - Repositorio inicial en GitHub con estructura de carpetas (`data/`, `scripts/`, `docs/`).  
   - Configuración de ramas (`main`, `develop`) y tablero Kanban.  
   - Catálogo preliminar de fuentes de datos (en `docs/fuentes`).  
   - Descarga y almacenamiento de datos crudos EPA/INE (p. ej. CSV en `data/raw`).  
-  - Documento de objetivos generales y plan de trabajo.  
+  - Documento de objetivos generales y plan de trabajo.
+  - Página Web visual.
 
-- **Sprint 2 (Semanas 3-4):**  
-  - Pipeline ETL básico implementado: scripts de limpieza y transformación de datos (guardando el resultado en `data/processed`).  
+- **Sprint 2:**  
+  - Pipeline ETL básico implementado: scripts de limpieza y transformación de datos (guardando el resultado en `data/processed`).
+  - Generación del dataset procesado en data/processed.
   - Análisis exploratorio inicial: gráficos de la serie histórica (por año).  
-  - Modelo de referencia (regresión lineal) entrenado y validado con métrica básica (por ejemplo, R²).  
+  - Implementación de un modelo base de predicción (regresión lineal).
+  - Visualización basica de resultados en la web.
 
-- **Sprint 3 (Semanas 5-6):**  
-  - Modelos avanzados entrenados: ARIMA y Prophet (o similar).  
-  - Evaluación comparativa: cálculo de MAE/MAPE para cada modelo.  
-  - Selección del modelo final según resultados (documentada).  
-  - Primer borrador de gráficos finales (histórico + predicción).  
-
-- **Sprint 4 (Semanas 7-8):**  
-  - Dashboard o informes finales con visualizaciones claras del forecast.  
-  - Preparación del entorno de despliegue (por ejemplo, API simple en Docker) si el tiempo lo permite.  
-  - Redacción del informe completo y documentación final (README, anexos, presentación).  
+- **Sprint 3:**  
+  - Implementación de un modelo adicional (ARIMA o Prophet, solo uno).
+  - Comparación sencilla entre modelos (métrica básica).
+  - Selección del modelo final (justificación simple).
+  - Generación de predicciones y gráficos finales (histórico + predicción).
+  - Mejora visual mínima del dashboard (claridad > diseño).
+  - Documentación final (README + informe).
+  - Preparación de la presentación.
 
 ## 7. Riesgos y mitigaciones  
 - **Datos insuficientes o inconsistentes:** *Mitigación:* Verificar la calidad al inicio (control de nulos, años faltantes). Documentar cualquier vaciamiento. En caso de lagunas, documentar como limitación.  
 - **Precisión baja del modelo:** *Mitigación:* Comparar varios modelos (ARIMA, Prophet, regresión). Ajustar parámetros básicos. Si el error es alto (MAPE > 15%), informar y centrarse en tendencias generales más que en valores exactos.  
-- **Falta de tiempo / alcance excesivo:** *Mitigación:* Priorizar objetivos esenciales (datos + modelo) y recortar extras (por ejemplo, omitir predicción por subsectores o geografía detallada). Ajustar el alcance al sprint planificado.  
+- **Falta de tiempo / alcance excesivo:** *Mitigación:* Priorizar objetivos esenciales (datos + modelo) y recortar extras (por ejemplo, omitir predicción por subsectores o geografía detallada). Ajustar el alcance al sprint planificado.
 - **Problemas técnicos (instalación de librerías, entorno):** *Mitigación:* Crear un entorno virtual (venv/conda) o contenedor Docker básico al inicio. Documentar dependencias en un `requirements.txt`.  
 - **Desacuerdos en el equipo o sobrecarga de tareas:** *Mitigación:* Definir roles claros (frontend, backend, data, devops). Reuniones breves diarias (scrum) y revisión constante del Kanban. Ajuste rápido de responsabilidades si alguien se retrasa.  
 - **Errores de integración:** *Mitigación:* Usar control de versiones (Git). Revisar y probar cada script por separado antes de integrarlo al pipeline. Mantener `README` actualizado para que cualquier integrante conozca el flujo de trabajo.  
 
-## 8. Cronograma simplificado por semanas  
+## 8. Cronograma simplificado  
 
-| Semana       | Actividades principales                                                 |
-|--------------|-------------------------------------------------------------------------|
-| **Semana 1** (8–14 Abr)  | Confirmar Reto C y objetivos; configurar repositorio y Kanban; revisar fuentes de datos; descargar datos EPA/CSD iniciales. |
-| **Semana 2** (15–21 Abr) | Desarrollar pipeline ETL: limpieza de datos y creación del dataset procesado; análisis exploratorio inicial (gráficos básicos). |
-| **Semana 3** (22–28 Abr) | Entrenar modelo de base (regresión lineal); visualizar resultados; comenzar modelo ARIMA (prueba de estacionariedad). |
-| **Semana 4** (29 Abr–5 May) | Completar modelos ARIMA y Prophet; validar con datos 2024-2025; evaluar métricas de error; seleccionar modelo final. |
-| **Semana 5** (6–12 May)  | Afinar el modelo final; generar predicciones 2026-2027; diseñar gráficos comparativos (histórico vs forecast). |
-| **Semana 6** (13–19 May) | Desarrollar dashboard o notebook con resultados finales; preparar entorno de despliegue (API simple o contenedor) si procede. |
-| **Semana 7** (20–26 May) | Redactar documentación y README definitivo; preparar presentación de resultados; corregir detalles finales. |
-| **Semana 8** (27 May–2 Jun) | Revisión final de entregables, validación con criterios de éxito; entrega del informe y código al completo. |
+| Periodo | Actividades principales |
+|--------|------------------------|
+| **Día 1–2 (7–8 Abr)** | Confirmar Reto C y objetivos; configurar repositorio, ramas y Kanban; identificar y descargar fuentes de datos (EPA/INE); estructura base del proyecto; web inicial simple. |
+| **Día 3–7 (9–13 Abr)** | Desarrollo del pipeline ETL básico (limpieza y transformación de datos); generación del dataset procesado; inicio del análisis exploratorio (gráficos simples). |
+| **Día 8–12 (14–18 Abr)** | Finalizar análisis exploratorio; implementación del modelo base (regresión lineal); primeras predicciones; integración básica en la web/dashboard. |
+| **Día 13–16 (19–22 Abr)** | Implementación de un modelo adicional (ARIMA o Prophet); comparación simple de modelos; selección del modelo final; generación de gráficos finales (histórico + predicción). |
+| **Día 17–18 (23–24 Abr)** | Documentación final (README, informe); preparación de la presentación; revisión general del proyecto; entrega final. |
+
+---
+
+## Nota
+
+Este cronograma está optimizado para un desarrollo corto, priorizando:
+
+- Funcionalidad completa del pipeline  
+- Modelo predictivo básico pero válido  
+- Visualización clara de resultados  
+- Documentación correcta  
 
 *(Las fechas son aproximadas; se recomienda una revisión al inicio de cada sprint para ajustes.)*  
 
