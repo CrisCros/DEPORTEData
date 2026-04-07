@@ -123,11 +123,7 @@ Este cronograma está optimizado para un desarrollo corto, priorizando:
 
 ## 12. Recomendaciones y primeros pasos inmediatos  
 1. **Confirmar Reto C con el equipo:** Asegurarse de que todos comprenden que el proyecto se centrará en la previsión de empleo deportivo, y asignar roles iniciales (data, modelado, devops, etc.).  
-2. **Recopilar datos oficiales:** Localizar y descargar las series de empleo deportivo (EPA/INE vía DEPORTEData【15†L59-L63】, informes CSD 2020-2025). Guardar las fuentes originales y documentarlas en `docs/fuentes`.  
+2. **Recopilar datos oficiales:** Localizar y descargar las series de empleo deportivo (EPA/INE vía DEPORTEData, informes CSD 2020-2025). Guardar las fuentes originales y documentarlas en `docs/fuentes`.  
 3. **Configurar el repositorio:** Crear el repositorio Git, definir ramas (`main`, `develop`), proteger la principal y abrir el tablero Kanban. Añadir etiquetas y plantillas (issue, PR).  
 4. **Desarrollar pipeline básico:** Escribir un primer script (Python) que cargue los datos crudos descargados y genere un archivo limpio (ej. `data/processed/empleo_deportivo.csv`). Verificar la integridad de los datos procesados.  
 5. **Diseñar modelo de datos y plan de análisis:** En el README inicial o documento de planificación, bosquejar el modelo analítico (columnas esperadas) y la estrategia de modelado (qué métodos se probarán). Esto servirá de guía para el primer sprint.  
-
-Con estos pasos iniciales, el equipo podrá arrancar el proyecto con una base sólida y planificada. A partir de ahí, se avanzará sprint a sprint según el cronograma establecido, manteniendo comunicación constante y adaptando el alcance según sea necesario. 
-
-**Fuentes citadas:** INE/EPA (DEPORTEData)【15†L59-L63】【14†L39-L44】; Consejo Superior de Deportes (CSD) / Ministerio de Educación【14†L39-L44】; PwC (Sector Deportivo, 2018)【17†L528-L534】. (Las cifras reflejan datos oficiales que fundamentan el proyecto).
