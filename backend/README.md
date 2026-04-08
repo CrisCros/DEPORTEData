@@ -34,13 +34,33 @@ uvicorn app.main:app --reload --port 8000
 Endpoints disponibles:
 
 - Health check: `http://localhost:8000/health`
-- Documentación Swagger: `http://localhost:8000/docs`
+- Documentación Swagger: `http://localhost:8000/endpoints`
 
 ## Endpoints
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| GET | `/health` | Health check |
+| Método | Ruta | Protegido | Descripción |
+|--------|------|-----------|-------------|
+| GET | `/health` | No | Health check |
+| POST | `/login` | No | Autenticación, devuelve JWT |
+| POST | `/getResponseChat` | Sí | Chat RAG simulado |
+| GET | `/getDatosDashboard` | Sí | Datos y KPIs para dashboard |
+
+Los endpoints protegidos requieren la cabecera: Authorization: Bearer <token>
+El token se obtiene llamando a `/login` con:
+```json
+{
+  "username": "admin",
+  "password": "*admin1234"
+}
+```
+
+## Estructura del módulo
+backend/app/
+├── init.py
+├── main.py              # Definición de endpoints
+├── funciones.py         # Lógica JWT y utilidades
+└── models_request.py    # Modelos Pydantic de request
+
 
 ## Tests
 ```bash
