@@ -1,327 +1,275 @@
-# DEPORTEData · Sprint 1 Kanban Plan (Reto A)
+# DEPORTEData · Sprint 1 — Planificación y Ejecución (Reto C)
 
 ## Contexto operativo
-- Proyecto: **DEPORTEData**.
-- Reto elegido: **Reto A** (gasto por hogar vs práctica federada por CCAA).
-- Duración sprint: **1 semana**.
-- Metodología: **Scrum ligero + Kanban operativo**.
-- Equipo: frontend, backend, IA y devops.
+
+- Proyecto: **DEPORTEData**  
+- Reto seleccionado: **Reto C — Predicción del empleo vinculado al deporte en España**   
+- Metodología: **Scrum ligero con soporte Kanban**  
+- Equipo:  
+  - Frontend  
+  - Backend  
+  - IA  
+  - DevOps  
+
+El Sprint 1 se ha planteado como un sprint de **inicialización del proyecto**, cuyo objetivo principal ha sido establecer una base técnica, organizativa y analítica suficientemente sólida para permitir el desarrollo acelerado en los siguientes sprints.
 
 ---
 
-## 1) Estructura de backlog para Sprint 1
+## Objetivo del Sprint 1
 
-### ÉPICA E1 — Definición del problema, hipótesis y KPIs
-**Objetivo**: aterrizar el reto A en preguntas analíticas medibles.
+El objetivo del Sprint 1 ha sido **poner en funcionamiento el proyecto en todas sus capas principales**, sin buscar aún resultados finales, sino garantizando:
 
-Subtareas:
-1. Definir pregunta principal y preguntas secundarias.
-2. Formular 3–5 hipótesis verificables.
-3. Definir KPIs mínimos (gasto hogar, práctica federada, variación interanual, correlación inicial).
-4. Establecer glosario de métricas y supuestos.
+- definición clara del alcance y objetivos;
+- disponibilidad de datos reales;
+- base técnica inicial (frontend, backend, infraestructura);
+- inicio del enfoque analítico y del modelo;
+- organización del trabajo mediante herramientas colaborativas.
 
----
-
-### ÉPICA E2 — Catálogo y trazabilidad de fuentes oficiales
-**Objetivo**: identificar y documentar datasets descargables sin scraping.
-
-Subtareas:
-1. Selección de fuentes oficiales (INE, CSD, ministerios, portales abiertos).
-2. Registro de licencia, periodicidad, granularidad y cobertura.
-3. Descarga de datasets en `data/raw/`.
-4. Diccionario inicial de campos por fuente.
+Este enfoque permite reducir riesgos en fases posteriores y asegurar una evolución controlada del proyecto.
 
 ---
 
-### ÉPICA E3 — Base técnica de ingestión y estructura del repositorio
-**Objetivo**: dejar el proyecto listo para desarrollar con flujo reproducible.
+## Alcance del Sprint 1
 
-Subtareas:
-1. Estructura de carpetas (`src/`, `data/`, `notebooks/`, `docs/`, `infra/`).
-2. Script de ingestión base y validación de esquema inicial.
-3. Versionado de dependencias y `.env.example`.
-4. Convenciones de logging y gestión de errores.
+### Incluye
 
----
-
-### ÉPICA E4 — Diseño preliminar del modelo analítico en estrella
-**Objetivo**: definir modelo lógico para hechos/dimensiones del reto A.
-
-Subtareas:
-1. Definir tabla de hechos `hechos_indicadores`.
-2. Definir dimensiones `dim_tiempo`, `dim_geografia`, `dim_indicador`, `dim_fuente`.
-3. Proponer claves y reglas de integridad.
-4. Entregar diagrama (Mermaid o draw.io exportado).
+- Definición del problema y objetivos del Reto C  
+- Creación y configuración del repositorio en GitHub  
+- Configuración del tablero Kanban y flujo de trabajo  
+- Desarrollo inicial del frontend (estructura funcional)  
+- Inicio del backend (definición de endpoints básicos)  
+- Recolección de datos oficiales (EPA/INE)  
+- Inicio del proceso de limpieza y depuración de datos  
+- Evaluación preliminar de modelos de predicción  
+- Inicio de la configuración del entorno técnico (cluster/infrastructura)  
 
 ---
 
-### ÉPICA E5 — Entorno de trabajo, CI mínima y definición de DoD
-**Objetivo**: reducir fricción de equipo desde Sprint 1.
+## Épicas del Sprint 1
 
-Subtareas:
-1. Configurar workflow CI básico (lint + tests smoke).
-2. Definir Definition of Done para issues.
-3. Configurar plantillas de issue/PR.
-4. Definir normas de ramas y revisión.
+### ÉPICA E1 — Definición del problema y objetivos
 
----
+**Descripción:**  
+Establecer el marco conceptual del proyecto, definiendo el objetivo principal, los objetivos específicos y el alcance realista del Reto C.
 
-## 2) Lista de issues propuestas (épicas y subtareas)
+**Resultados alcanzados:**
+- Definición del objetivo general del proyecto  
+- Redacción de objetivos específicos priorizados  
+- Identificación de limitaciones del proyecto  
+- Elaboración del cronograma inicial  
 
-> Formato: **Título · Descripción · Criterios de aceptación · Etiquetas · Responsable sugerido**.
-
-### EPIC-01 · Definición analítica del Reto A
-**Descripción**: consolidar alcance analítico de Sprint 1 y documentar hipótesis del equipo.
-
-**Criterios de aceptación**:
-- Documento de alcance en `docs/` publicado.
-- Pregunta principal + al menos 3 preguntas secundarias.
-- 3–5 hipótesis con posible método de validación.
-
-**Etiquetas**: `epic`, `sprint-1`, `analytics`, `reto-a`
-
-**Responsable sugerido**: IA (co-lidera con backend)
-
-#### Subtareas
-1. **[S1-A1] Redactar marco de hipótesis iniciales del Reto A**
-   - Criterios: hipótesis medibles + variable dependiente/independiente.
-   - Etiquetas: `task`, `analytics`, `ia`, `sprint-1`
-   - Responsable: IA
-
-2. **[S1-A2] Definir KPIs analíticos mínimos del sprint**
-   - Criterios: al menos 4 KPIs con fórmula y fuente.
-   - Etiquetas: `task`, `analytics`, `backend`, `sprint-1`
-   - Responsable: Backend
+**Estado:** Completado  
 
 ---
 
-### EPIC-02 · Catálogo de fuentes y trazabilidad
-**Descripción**: construir inventario oficial de fuentes con trazabilidad y metadatos.
+### ÉPICA E2 — Recolección y comprensión de datos
 
-**Criterios de aceptación**:
-- Fichero `docs/sources_catalog.md` creado.
-- Cada fuente incluye URL, licencia, rango temporal, cobertura geográfica, formato.
-- Datasets descargados a `data/raw/` con naming estándar.
+**Descripción:**  
+Identificar, descargar y analizar las fuentes de datos necesarias para el proyecto.
 
-**Etiquetas**: `epic`, `data`, `sprint-1`, `reto-a`
+**Resultados alcanzados:**
+- Identificación de datasets oficiales (EPA, INE, DEPORTEData)  
+- Descarga de múltiples conjuntos de datos en formato CSV  
+- Organización inicial en estructura `data/raw/`  
+- Análisis preliminar de variables disponibles  
 
-**Responsable sugerido**: Backend
+**Trabajo en curso:**
+- Limpieza y normalización de datos  
+- Evaluación de consistencia entre datasets  
 
-#### Subtareas
-1. **[S1-B1] Identificar fuentes oficiales para gasto por hogar**
-   - Criterios: mínimo 2 fuentes candidatas con justificación.
-   - Etiquetas: `task`, `data`, `backend`, `sprint-1`
-   - Responsable: Backend
-
-2. **[S1-B2] Identificar fuentes oficiales de práctica federada por CCAA**
-   - Criterios: mínimo 2 fuentes candidatas con detalle territorial.
-   - Etiquetas: `task`, `data`, `ia`, `sprint-1`
-   - Responsable: IA
-
-3. **[S1-B3] Descargar y versionar dataset raw inicial**
-   - Criterios: archivos en `data/raw/` + README de procedencia.
-   - Etiquetas: `task`, `data-engineering`, `backend`, `sprint-1`
-   - Responsable: Backend
+**Estado:** En progreso  
 
 ---
 
-### EPIC-03 · Base técnica del repositorio y pipeline de ingestión
-**Descripción**: crear base de código para ingestión reproducible y estructura de trabajo.
+### ÉPICA E3 — Desarrollo inicial del backend
 
-**Criterios de aceptación**:
-- Estructura estándar de directorios creada.
-- Script ejecutable de ingestión inicial.
-- Dependencias y configuración base documentadas.
+**Descripción:**  
+Crear la base del backend para permitir la gestión y futura exposición de datos y predicciones.
 
-**Etiquetas**: `epic`, `backend`, `devops`, `sprint-1`
+**Resultados alcanzados:**
+- Definición de la estructura del backend  
+- Implementación inicial de endpoints básicos  
+- Preparación para conexión con datos procesados  
 
-**Responsable sugerido**: Backend
+**Trabajo en curso:**
+- Integración con datasets  
+- Estabilización del formato de respuesta  
 
-#### Subtareas
-1. **[S1-C1] Crear estructura base del proyecto y convenciones**
-   - Criterios: árbol de carpetas + README actualizado.
-   - Etiquetas: `task`, `backend`, `documentation`, `sprint-1`
-   - Responsable: Backend
-
-2. **[S1-C2] Implementar script `ingest_raw.py` (MVP)**
-   - Criterios: descarga/copia raw + validación básica de columnas.
-   - Etiquetas: `task`, `data-engineering`, `backend`, `sprint-1`
-   - Responsable: Backend
-
-3. **[S1-C3] Definir `.env.example` y parámetros de entorno**
-   - Criterios: variables obligatorias documentadas.
-   - Etiquetas: `task`, `devops`, `sprint-1`
-   - Responsable: DevOps
+**Estado:** En progreso  
 
 ---
 
-### EPIC-04 · Modelo analítico preliminar en estrella
-**Descripción**: definir diseño lógico inicial para hechos y dimensiones del reto.
+### ÉPICA E4 — Desarrollo inicial del frontend
 
-**Criterios de aceptación**:
-- Diagrama del modelo en `docs/`.
-- Definición de PK/FK y granularidad.
-- Supuestos y riesgos de modelado identificados.
+**Descripción:**  
+Construir una interfaz básica que permita visualizar información del proyecto.
 
-**Etiquetas**: `epic`, `data-model`, `sprint-1`, `reto-a`
+**Resultados alcanzados:**
+- Creación de la estructura web inicial  
+- Implementación de una primera visualización  
+- Preparación para integración con datos dinámicos
+  
+- **Trabajo en curso:**
+- Despliegue de la web
 
-**Responsable sugerido**: IA
 
-#### Subtareas
-1. **[S1-D1] Diseñar tabla de hechos y granularidad**
-   - Criterios: grano explícito (anio-ccaa-indicador-fuente).
-   - Etiquetas: `task`, `data-model`, `ia`, `sprint-1`
-   - Responsable: IA
-
-2. **[S1-D2] Diseñar dimensiones y diccionario de campos**
-   - Criterios: dimensiones mínimas documentadas con tipos.
-   - Etiquetas: `task`, `data-model`, `backend`, `sprint-1`
-   - Responsable: Backend
+**Estado:** En progreso  
 
 ---
 
-### EPIC-05 · Operación del equipo: flujo GitHub + CI + calidad
-**Descripción**: establecer reglas de colaboración, revisión y despliegue mínimo seguro.
+### ÉPICA E5 — Selección del modelo analítico
 
-**Criterios de aceptación**:
-- Plantillas de issue y PR activas.
-- Reglas de ramas y merge documentadas.
-- CI básica ejecutándose en PR.
+**Descripción:**  
+Definir el enfoque de predicción a utilizar en el proyecto.
 
-**Etiquetas**: `epic`, `devops`, `governance`, `sprint-1`
+**Resultados alcanzados:**
+- Evaluación de modelos candidatos (regresión, ARIMA, Prophet)  
+- Selección preliminar de enfoque base  
+- Definición de estrategia de modelado
 
-**Responsable sugerido**: DevOps
+**Trabajo en curso:**
+- Implementación del modelo baseline  
 
-#### Subtareas
-1. **[S1-E1] Configurar issue templates (bug/task/epic)**
-   - Criterios: plantillas funcionales en `.github/ISSUE_TEMPLATE/`.
-   - Etiquetas: `task`, `devops`, `documentation`, `sprint-1`
-   - Responsable: DevOps
-
-2. **[S1-E2] Crear plantilla de Pull Request**
-   - Criterios: checklist DoD + impacto + evidencias.
-   - Etiquetas: `task`, `devops`, `documentation`, `sprint-1`
-   - Responsable: DevOps
-
-3. **[S1-E3] Definir branch policy y estrategia de merge**
-   - Criterios: documento publicado y compartido al equipo.
-   - Etiquetas: `task`, `governance`, `devops`, `sprint-1`
-   - Responsable: DevOps
+**Estado:** En progreso  
 
 ---
 
-## 3) Separación épicas vs subtareas
+### ÉPICA E6 — Infraestructura y entorno técnico
 
-- Las **épicas** agrupan resultados de negocio/técnicos de alto nivel para Sprint 1.
-- Las **subtareas** son unidades ejecutables de 0.5 a 1.5 días, asignables a una persona.
-- Regla: una subtarea no debe mezclar dos dominios (ej. ingestión + dashboard).
+**Descripción:**  
+Preparar el entorno necesario para ejecutar y escalar el proyecto.
 
----
+**Resultados alcanzados:**
+- Inicio de la configuración del entorno (cluster)  
+- Definición inicial de dependencias del proyecto  
+- Organización estructural del repositorio  
 
-## 4) Columnas propuestas del Kanban (GitHub Projects)
+**Trabajo en curso:**
+- Configuración completa del entorno  
+- Evaluación de necesidad real de infraestructura avanzada  
 
-1. **Backlog**: todo lo no comprometido.
-2. **Ready**: issue refinado con criterios y responsable.
-3. **In Progress**: trabajo activo (WIP limitado por rol).
-4. **In Review**: PR abierto con reviewer asignado.
-5. **Blocked**: dependencia externa o impedimento.
-6. **Done (Sprint)**: mergeado y validado en `develop`.
-
-Sugerencia WIP:
-- Frontend: 2
-- Backend: 3
-- IA: 2
-- DevOps: 2
+**Estado:** En progreso  
 
 ---
 
-## 5) Plantillas propuestas
+## Lista de issues y estado
 
-### 5.1 Plantilla de Issue (Task)
-```md
-## Contexto
-Describe el problema o necesidad.
+### EPIC-01 · Definición del alcance del Reto C  
+**Estado:** Completado  
 
-## Objetivo
-Resultado concreto esperado.
-
-## Alcance
-- Incluye:
-- No incluye:
-
-## Criterios de aceptación
-- [ ] Criterio 1
-- [ ] Criterio 2
-- [ ] Criterio 3
-
-## Dependencias
-Issues o PRs relacionados.
-
-## Evidencias esperadas
-Capturas, logs, notebook, outputs, etc.
-```
-
-### 5.2 Plantilla de Pull Request
-```md
-## Resumen
-Qué cambia y por qué.
-
-## Tipo de cambio
-- [ ] feature
-- [ ] fix
-- [ ] refactor
-- [ ] docs
-- [ ] chore
-
-## Evidencias
-- Capturas / outputs / enlaces.
-
-## Checklist DoD
-- [ ] Cumple criterios de aceptación del issue.
-- [ ] Tests/checks ejecutados localmente.
-- [ ] Documentación actualizada.
-- [ ] Sin secretos ni credenciales.
-- [ ] Reviewer asignado.
-
-## Issues relacionados
-Closes #...
-```
+**Criterios cumplidos:**
+- Documento de objetivos definido  
+- Alcance realista establecido  
+- Cronograma inicial desarrollado  
 
 ---
 
-## 6) Normas de ramas y merges (GitHub Flow simplificado)
+### EPIC-02 · Recolección de datos  
+**Estado:** En progreso  
 
-### Ramas
-- `main`: protegida, solo producción estable.
-- `develop`: integración del sprint.
-- `feature/<area>-<short-name>`: trabajo de cada issue.
-- `hotfix/<short-name>`: correcciones urgentes.
+**Progreso:**
+- Identificación de fuentes oficiales  
+- Descarga de datasets  
 
-### Reglas de merge
-1. Nunca push directo a `main` ni `develop`.
-2. Todo cambio entra por PR desde `feature/*` -> `develop`.
-3. `develop` -> `main` solo en cierre de sprint/release.
-4. Mínimo 1 aprobación de reviewer (2 si toca infra/seguridad).
-5. CI en verde obligatoria antes de merge.
-6. Merge preferido: **Squash and merge** para mantener historial limpio.
-7. Commits con convención sugerida: `feat:`, `fix:`, `docs:`, `chore:`.
+**Pendiente:**
+- Finalización de la limpieza de datos  
+- Consolidación de dataset base  
 
 ---
 
-## 7) Definition of Done (DoD) para Sprint 1
+### EPIC-03 · Backend inicial  
+**Estado:** En progreso  
 
-Una issue se considera terminada cuando:
-1. Cumple todos sus criterios de aceptación.
-2. Tiene PR mergeada en `develop`.
-3. Incluye actualización documental si aplica.
-4. Pasa checks automáticos mínimos.
-5. Queda trazabilidad (issue + PR + evidencia).
+**Progreso:**
+- Estructura backend definida  
+- Endpoints básicos creados  
+
+**Pendiente:**
+- Conexión con datos reales  
+- Validación de respuestas  
 
 ---
 
-## Recomendación de arranque del Sprint 1 (día 1)
-1. Crear proyecto Kanban en GitHub con columnas propuestas.
-2. Cargar las 5 épicas y sus subtareas.
-3. Etiquetar por rol (`frontend`, `backend`, `ia`, `devops`).
-4. Asignar responsables y estimación rápida (S/M/L).
-5. Arrancar con EPIC-02 y EPIC-03 en paralelo.
+### EPIC-04 · Frontend inicial  
+**Estado:** Completado  
+
+**Progreso:**
+- Estructura web funcional  
+- Visualización básica implementada  
+
+---
+
+### EPIC-05 · Modelo predictivo  
+**Estado:** En progreso  
+
+**Progreso:**
+- Evaluación de modelos  
+- Definición del enfoque  
+
+**Pendiente:**
+- Implementación del modelo baseline  
+
+---
+
+### EPIC-06 · Infraestructura  
+**Estado:** En progreso  
+
+**Progreso:**
+- Inicio del cluster  
+- Configuración inicial  
+
+**Pendiente:**
+- Entorno completamente operativo  
+
+---
+
+## Evaluación del Sprint 1
+
+### Logros principales
+
+El Sprint 1 ha permitido:
+
+- Establecer una base organizativa sólida mediante GitHub y Kanban  
+- Definir claramente el problema, los objetivos y el alcance del proyecto  
+- Disponer de datos reales procedentes de fuentes oficiales  
+- Iniciar el desarrollo de todas las capas del sistema (frontend, backend, IA, infraestructura)  
+- Avanzar en la comprensión del dataset y su estructura  
+
+---
+
+### Limitaciones detectadas
+
+- El proceso de limpieza de datos no se ha completado  
+- No existe aún un dataset procesado consolidado  
+- El backend no está conectado a datos reales  
+- El modelo predictivo no ha sido implementado  
+- La infraestructura no está completamente operativa  
+
+Estas limitaciones son coherentes con la naturaleza del sprint, centrado en inicialización.
+
+---
+
+### Riesgos identificados
+
+- Complejidad en la unificación de datasets con diferentes estructuras  
+- Limitación temporal para implementar modelos avanzados  
+- Riesgo de sobrecarga en la infraestructura sin necesidad real  
+- Alcance excesivo del chatbot respecto a los datos disponibles  
+
+---
+
+## Conclusión del Sprint 1
+
+El Sprint 1 ha cumplido su propósito principal: **establecer una base técnica, organizativa y analítica sólida sobre la que construir el proyecto**.
+
+A pesar del corto periodo de ejecución, se ha logrado avanzar de forma paralela en todos los componentes clave:
+
+- datos,  
+- backend,  
+- frontend,  
+- modelo,  
+- infraestructura.  
+
+Este enfoque permite abordar el Sprint 2 con una base estructurada, reduciendo incertidumbre y facilitando la integración progresiva de los distintos componentes.
+
+El proyecto se encuentra en una fase inicial, pero correctamente orientado, con una planificación realista y un avance equilibrado entre áreas técnicas.
