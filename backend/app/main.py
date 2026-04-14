@@ -1,13 +1,28 @@
-from fastapi import FastAPI, HTTPException, Depends
-import random
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
-from app.models_request import LoginRequest, ChatRequest
-from app.funciones import create_token, verify_token
+from app.core.config import FRONTEND_ORIGINS
+from app.funciones import create_token
+from app.models_request import LoginRequest
+from app.routes.chat import router as chat_router
+from app.routes.dashboard import router as dashboard_router
 
 app = FastAPI(
     title="DeporteData API",
     description="Backend API para DeporteData",
-    version="0.2.0",
+    version="0.3.1",
+)
+
+explicit_origins = [origin for origin in FRONTEND_ORIGINS if "*" not in origin]
+has_vercel_wildcard = any(origin == "https://*.vercel.app" for origin in FRONTEND_ORIGINS)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=explicit_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app" if has_vercel_wildcard else None,
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Temporal hasta tener BD
@@ -20,16 +35,6 @@ TEST_USER = {
     }
 }
 
-RESPUESTAS_SIMULADAS = [
-    "Según la previsión anual, el sector del deporte podría generar un aumento moderado de empleo.",
-    "La estimación del modelo indica que la demanda de empleo deportivo podría crecer.",
-    "La predicción sugiere que el empleo en el sector deportivo tendrá una evolución positiva.",
-    "El modelo prevé que los puestos de trabajo en el ámbito deportivo podrían incrementarse.",
-    "La previsión permite anticipar tendencias de empleo en el deporte.",
-]
-
-
-# Endpoints públicos
 
 @app.get("/health")
 def health_check():
@@ -62,31 +67,5 @@ def login(request: LoginRequest):
     }
 
 
-# Endpoints protegidos
-
-@app.post("/getResponseChat")
-def get_response_chat(request: ChatRequest):
-    if not request.question:
-        raise HTTPException(status_code=400, detail="La pregunta no puede estar vacía")
-
-    return {
-        "question": request.question,
-        "answer": random.choice(RESPUESTAS_SIMULADAS),
-    }
-
-
-@app.get("/getDatosDashboard")
-def get_datos_dashboard():
-    return {
-        "kpis": {
-            "total_empleo_miles": 294.1,
-            "variacion_anual_pct": 3.2,
-            "ratio_hombres_mujeres": 1.8,
-        },
-        "empleo_trimestral": [
-            {"periodo": "2025-1T", "valor": 254.7},
-            {"periodo": "2025-2T", "valor": 246.9},
-            {"periodo": "2025-3T", "valor": 285.1},
-            {"periodo": "2025-4T", "valor": 294.1},
-        ],
-    }
+app.include_router(dashboard_router)
+app.include_router(chat_router)
