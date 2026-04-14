@@ -7,4 +7,4 @@ class LoginRequest(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    question: str
+    message: str
