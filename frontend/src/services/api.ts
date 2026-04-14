@@ -27,10 +27,13 @@ const baseUrl = normalizedBaseUrl && /^https?:\/\//.test(normalizedBaseUrl)
   : DEFAULT_API_BASE_URL;
 
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
+  const method = init?.method?.toUpperCase() ?? 'GET';
+  const hasBody = init?.body !== undefined;
+
   const response = await fetch(`${baseUrl}${path}`, {
     ...init,
     headers: {
-      'Content-Type': 'application/json',
+      ...(hasBody || method !== 'GET' ? { 'Content-Type': 'application/json' } : {}),
       ...(init?.headers ?? {}),
     },
   });
