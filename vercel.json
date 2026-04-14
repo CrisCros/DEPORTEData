@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "if [ -f ./vercel-install.sh ]; then sh ./vercel-install.sh; else sh ../vercel-install.sh; fi",
+  "buildCommand": "if [ -f ./vercel-build.sh ]; then sh ./vercel-build.sh; else sh ../vercel-build.sh; fi",
+  "outputDirectory": ".vercel-dist",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://deporte-data-backend.onrender.com/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
