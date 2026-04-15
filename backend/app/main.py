@@ -1,92 +1,91 @@
-from fastapi import FastAPI, HTTPException, Depends
-import random
+"""
+DEPORTEData API — Punto de entrada.
 
-from app.models_request import LoginRequest, ChatRequest
-from app.funciones import create_token, verify_token
+Levanta DOS servidores FastAPI:
+  - API Pública  (:8000) → Frontend, login, chat, dashboard, datos
+  - API Privada  (:8001) → Spark jobs, admin S3/RDS
 
-app = FastAPI(
-    title="DeporteData API",
-    description="Backend API para DeporteData",
-    version="0.2.0",
+Uso:
+  python -m app.main
+"""
+
+import asyncio
+import logging
+import uvicorn
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.config import get_settings
+from app.api.routes_public import router as public_router
+from app.api.routes_private import router as private_router
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+logger = logging.getLogger(__name__)
+
+
+# App pública (:8000)
+public_app = FastAPI(
+    title="DEPORTEData API",
+    version="1.0.0",
+    description="API pública — login, chat, dashboard, consulta de datos",
 )
 
-# Temporal hasta tener BD
-TEST_USER = {
-    "admin": {
-        "name": "Administrador",
-        "username": "admin",
-        "password": "*admin1234",
-        "role": "admin",
-    }
-}
+public_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-RESPUESTAS_SIMULADAS = [
-    "Según la previsión anual, el sector del deporte podría generar un aumento moderado de empleo.",
-    "La estimación del modelo indica que la demanda de empleo deportivo podría crecer.",
-    "La predicción sugiere que el empleo en el sector deportivo tendrá una evolución positiva.",
-    "El modelo prevé que los puestos de trabajo en el ámbito deportivo podrían incrementarse.",
-    "La previsión permite anticipar tendencias de empleo en el deporte.",
-]
+public_app.include_router(public_router)
 
 
-# Endpoints públicos
+# App privada (:8001)
+private_app = FastAPI(
+    title="DEPORTEData Admin API",
+    version="1.0.0",
+    description="API privada — Spark jobs, admin S3/RDS",
+)
 
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
-
-
-@app.post("/login")
-def login(request: LoginRequest):
-    if not request.username or not request.password:
-        raise HTTPException(status_code=400, detail="Faltan datos: username y password son obligatorios")
-
-    user = TEST_USER.get(request.username)
-    if not user:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-
-    if request.password != user["password"]:
-        raise HTTPException(status_code=401, detail="Contraseña errónea")
-
-    token = create_token({
-        "sub": user["username"],
-        "name": user["name"],
-        "role": user["role"],
-    })
-
-    return {
-        "name": user["name"],
-        "username": user["username"],
-        "role": user["role"],
-        "token": token,
-    }
+private_app.include_router(private_router)
 
 
-# Endpoints protegidos
+# Arranque dual
+async def main():
+    s = get_settings()
 
-@app.post("/getResponseChat")
-def get_response_chat(request: ChatRequest):
-    if not request.question:
-        raise HTTPException(status_code=400, detail="La pregunta no puede estar vacía")
+    config_public = uvicorn.Config(
+        public_app,
+        host="0.0.0.0",
+        port=s.public_api_port,
+        log_level="info",
+    )
+    config_private = uvicorn.Config(
+        private_app,
+        host="0.0.0.0",
+        port=s.private_api_port,
+        log_level="info",
+    )
 
-    return {
-        "question": request.question,
-        "answer": random.choice(RESPUESTAS_SIMULADAS),
-    }
+    server_public = uvicorn.Server(config_public)
+    server_private = uvicorn.Server(config_private)
+
+    logger.info(f"NOM_USER_ID:   {s.nom_user_id}")
+    logger.info(f"SPARK_MASTER: {s.spark_master_url}")
+    logger.info(f"DB_HOST:      {s.db_host}")
+    logger.info(f"S3_BUCKET:    {s.s3_bucket_datalake}")
+    logger.info(f"API Pública   → :{s.public_api_port}")
+    logger.info(f"API Privada   → :{s.private_api_port}")
+
+    await asyncio.gather(
+        server_public.serve(),
+        server_private.serve(),
+    )
 
 
-@app.get("/getDatosDashboard")
-def get_datos_dashboard():
-    return {
-        "kpis": {
-            "total_empleo_miles": 294.1,
-            "variacion_anual_pct": 3.2,
-            "ratio_hombres_mujeres": 1.8,
-        },
-        "empleo_trimestral": [
-            {"periodo": "2025-1T", "valor": 254.7},
-            {"periodo": "2025-2T", "valor": 246.9},
-            {"periodo": "2025-3T", "valor": 285.1},
-            {"periodo": "2025-4T", "valor": 294.1},
-        ],
-    }
+if __name__ == "__main__":
+    asyncio.run(main())

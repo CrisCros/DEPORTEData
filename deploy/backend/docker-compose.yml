@@ -1,0 +1,71 @@
+# ============================================================
+# DEPORTEData — docker-compose.yml
+#
+# Despliega el backend desde GHCR.
+# La versión de la imagen se controla desde .env (BACKEND_IMAGE_TAG)
+#
+# Uso:
+#   sudo docker compose pull
+#   sudo docker compose up -d
+#
+# Sprint 4: descomentar los servicios de Ollama y ChromaDB para RAG.
+# ============================================================
+
+services:
+
+  # ── Backend (FastAPI + Spark submit) ──────────
+  backend:
+    image: ghcr.io/criscros/deportedata/backend:${BACKEND_IMAGE_TAG:-latest}
+    container_name: deportedata-backend
+    network_mode: host
+    env_file: .env
+    restart: unless-stopped
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+
+  # ── Sprint 4: Ollama (LLM + Embeddings) ──────
+  # Descomentar cuando se integre el RAG
+  #
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: deportedata-ollama
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_data:/root/.ollama
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+
+  # ── Sprint 4: ChromaDB (Vector Store) ─────────
+  # Descomentar cuando se integre el RAG
+  #
+  # chromadb:
+  #   image: chromadb/chroma:0.5.0
+  #   container_name: deportedata-chromadb
+  #   ports:
+  #     - "8100:8000"
+  #   volumes:
+  #     - chroma_data:/chroma/chroma
+  #   environment:
+  #     - IS_PERSISTENT=TRUE
+  #     - ANONYMIZED_TELEMETRY=FALSE
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+
+# ── Sprint 4: Volúmenes para persistencia ──────
+# Descomentar junto con los servicios
+#
+# volumes:
+#   ollama_data:
+#   chroma_data:
