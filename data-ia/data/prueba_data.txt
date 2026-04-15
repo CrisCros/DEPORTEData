@@ -1,0 +1,17 @@
+DOCUMENTO: Estadísticas de Empleo Vinculado al Deporte (2022-2025)
+FUENTE: Ministerio de Educación, Formación Profesional y Deportes.
+
+[RESUMEN NARRATIVO]
+El empleo en el sector deportivo en España ha mostrado un crecimiento sostenido entre 2022 y 2025. El total de personas empleadas pasó de 234,6 mil en 2022 a 270,2 mil en 2025, lo que supone un incremento del 15,2% en el periodo completo. Se observa una mayor presencia de hombres (164,5 mil en 2025) frente a mujeres (105,7 mil), aunque ambos sexos han experimentado subidas constantes.
+
+[TABLA DE DATOS: VALORES ABSOLUTOS EN MILES]
+| Categoría | 2022 | 2023 | 2024 | 2025 | Variación 22-25 (%) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| TOTAL | 234,6 | 246,7 | 255,0 | 270,2 | +15,2% |
+| SEXO: Hombres | 135,6 | 148,3 | 152,6 | 164,5 | +21,3% |
+| SEXO: Mujeres | 98,9 | 98,4 | 102,4 | 105,7 | +6,9% |
+| EDAD: 16-24 años | 52,5 | 67,8 | 72,3 | 77,1 | +46,8% |
+| EDAD: 25-34 años | 61,1 | 66,3 | 64,3 | 68,7 | +12,4% |
+
+[ANÁLISIS DE TENDENCIA]
+El segmento de edad que más ha crecido es el de jóvenes (16-24 años), con un aumento espectacular del 46,8%. Por el contrario, los grupos de edad de 35 a 44 años han mostrado una ligera tendencia a la baja (-13,3% desde 2022).

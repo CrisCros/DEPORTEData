@@ -1,0 +1,17 @@
+DOCUMENTO: Alumnado en Enseñanzas Deportivas (Curso 2023-2024)
+FUENTE: Estadística de Enseñanzas no Universitarias.
+
+[RESUMEN NARRATIVO]
+Durante el curso 2023-2024, un total de 11.095 alumnos se matricularon en Enseñanzas Deportivas de Grado Medio en España. El fútbol y fútbol sala siguen siendo las disciplinas más demandadas, concentrando casi la mitad del alumnado total.
+
+[TABLA DE DATOS: MATRÍCULAS POR ESPECIALIDAD (GRADO MEDIO)]
+| Especialidad Deportiva | Alumnado (Absoluto) | Distribución (%) |
+| :--- | :---: | :---: |
+| Fútbol y Fútbol Sala | 4.848 | 43,7 |
+| Montaña y Escalada | 1.054 | 9,5 |
+| Hípica | 632 | 5,7 |
+| Baloncesto | 565 | 5,1 |
+| Salvamento y Socorrismo | 499 | 4,5 |
+
+[ANÁLISIS DE TENDENCIA]
+El fútbol mantiene su hegemonía en la formación de técnicos deportivos. Sin embargo, especialidades como "Montaña y Escalada" y "Hípica" han mostrado un repunte significativo, consolidándose como las principales alternativas de formación en el medio natural.

@@ -1,0 +1,15 @@
+DOCUMENTO: Estadística de Turismo Vinculado al Deporte 2024
+FUENTE: INE / Encuesta de Turismo de Residentes y de Gasto Turístico.
+
+[RESUMEN NARRATIVO]
+En el año 2024, el turismo deportivo en España superó los 5,3 millones de viajes totales. La mayor parte corresponde a residentes en España (3,8 millones de viajes), mientras que el turismo internacional sigue recuperándose con 1,4 millones de entradas. El gasto total asociado a estos viajes alcanzó los 3.048 millones de euros, destacando el mayor gasto medio por parte del turista internacional.
+
+[TABLA DE DATOS: VIAJES Y GASTO 2024]
+| Origen del Turista | Viajes (Miles) | Gasto Total (M€) | Gasto medio/viaje (€) |
+| :--- | :---: | :---: | :---: |
+| Residentes en España | 3.830,0 | 1.275,5 | 333,0 |
+| Turistas Internacionales | 1.473,0 | 1.772,0 | 1.203,0 |
+| **TOTAL** | **5.303,0** | **3.047,5** | **574,7** |
+
+[ANÁLISIS DE TENDENCIA]
+Se observa que, aunque el número de viajes de residentes es mayor (72% del total), el impacto económico del turista internacional es superior en términos de gasto total (58% del gasto), debido a una estancia media más larga y un gasto por viaje casi cuatro veces superior al nacional.
