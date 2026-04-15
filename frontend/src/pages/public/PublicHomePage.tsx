@@ -20,7 +20,7 @@ import { EmploymentLineChart } from '../../components/EmploymentLineChart';
 import { appConfig } from '../../config';
 import { type DashboardKpis, type DashboardSeries, dashboardApi } from '../../services/api';
 
-const grafanaBaseUrl = 'http://54.82.14.166:3000/d-solo/adp79lb/principal';
+const grafanaBaseUrl = appConfig.grafanaBaseUrl || '/api/grafana/d-solo/adp79lb/principal';
 const grafanaRange = 'orgId=1&from=1302878323442&to=1776263923442&timezone=browser&dtab=new-row';
 const publicDashboardUrl = appConfig.publicDashboardUrl || `${grafanaBaseUrl}?${grafanaRange}&panelId=panel-1`;
 const publicDashboardPanels = [

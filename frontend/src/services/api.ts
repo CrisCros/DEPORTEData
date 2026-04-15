@@ -24,7 +24,9 @@ export type LoginResponse = {
   token: string;
 };
 
-const rawBaseUrl = import.meta.env.VITE_API_BASE_URL as string | undefined;
+import { appConfig } from '../config';
+
+const rawBaseUrl = appConfig.apiBaseUrl || (import.meta.env.VITE_API_BASE_URL as string | undefined);
 const normalizedBaseUrl = rawBaseUrl?.replace(/\/+$/, '');
 
 const DEFAULT_API_BASE_URL = '/api';

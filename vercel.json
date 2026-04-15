@@ -6,10 +6,6 @@
   "outputDirectory": ".vercel-dist",
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "https://deporte-data-backend.onrender.com/$1"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

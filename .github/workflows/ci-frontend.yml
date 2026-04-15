@@ -53,19 +53,53 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-push
     if: ${{ success() }}
+    env:
+      EC2_HOST: ${{ secrets.EC2_HOST }}
+      EC2_USER: ${{ secrets.EC2_USER }}
+      EC2_PORT: ${{ secrets.EC2_PORT }}
+      EC2_FRONTEND_PATH: ${{ secrets.EC2_FRONTEND_PATH }}
+      FRONTEND_VERSION: ${{ needs.build-and-push.outputs.version }}
 
     steps:
+      - name: Validate deploy secrets
+        shell: bash
+        run: |
+          set -eu
+          required=(EC2_HOST EC2_USER EC2_FRONTEND_PATH)
+          for var in "${required[@]}"; do
+            if [ -z "${!var:-}" ]; then
+              echo "Missing required secret: $var"
+              exit 1
+            fi
+          done
+
+      - name: Prepare SSH key
+        shell: bash
+        run: |
+          set -eu
+          mkdir -p ~/.ssh
+          cat > ~/.ssh/ec2_key <<'KEY'
+          ${{ secrets.EC2_SSH_KEY }}
+          KEY
+          sed -i 's/\\n/\n/g' ~/.ssh/ec2_key
+          tr -d '\r' < ~/.ssh/ec2_key > ~/.ssh/ec2_key.tmp
+          mv ~/.ssh/ec2_key.tmp ~/.ssh/ec2_key
+          chmod 600 ~/.ssh/ec2_key
+          if [ ! -s ~/.ssh/ec2_key ]; then
+            echo "Missing required secret: EC2_SSH_KEY"
+            exit 1
+          fi
+          ssh-keyscan -p "${EC2_PORT:-22}" "${EC2_HOST}" >> ~/.ssh/known_hosts
+
       - name: Deploy frontend to EC2
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script_stop: true
-          script: |
-            set -eu
-            cd "${{ secrets.EC2_FRONTEND_PATH }}"
-            sed -i "s/^FRONTEND_IMAGE_TAG=.*/FRONTEND_IMAGE_TAG=${{ needs.build-and-push.outputs.version }}/" .env
-            sudo docker compose pull
-            sudo docker compose up -d
-            sudo docker compose ps
+        shell: bash
+        run: |
+          set -eu
+          ssh -i ~/.ssh/ec2_key -p "${EC2_PORT:-22}" "${EC2_USER}@${EC2_HOST}" <<EOF
+          set -eu
+          cd "${EC2_FRONTEND_PATH}"
+          sed -i "s/^FRONTEND_IMAGE_TAG=.*/FRONTEND_IMAGE_TAG=${FRONTEND_VERSION}/" .env
+          sudo docker compose pull
+          sudo docker compose up -d
+          sudo docker compose ps
+          EOF
