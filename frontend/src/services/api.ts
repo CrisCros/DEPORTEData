@@ -17,6 +17,13 @@ export type ChatResponse = {
   answer: string;
 };
 
+export type LoginResponse = {
+  name: string;
+  username: string;
+  role: string;
+  token: string;
+};
+
 const rawBaseUrl = import.meta.env.VITE_API_BASE_URL as string | undefined;
 const normalizedBaseUrl = rawBaseUrl?.replace(/\/+$/, '');
 
@@ -56,5 +63,13 @@ export const chatApi = {
     requestJson<ChatResponse>('/chat', {
       method: 'POST',
       body: JSON.stringify({ message }),
+    }),
+};
+
+export const authApi = {
+  login: (username: string, password: string) =>
+    requestJson<LoginResponse>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
     }),
 };

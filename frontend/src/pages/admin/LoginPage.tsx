@@ -12,6 +12,7 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const redirectTarget = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? '/admin';
 
@@ -19,15 +20,23 @@ export function LoginPage() {
     <Center mih="100vh" px="md">
       <Paper withBorder radius="xl" p="xl" maw={440} w="100%" className="glass-card">
         <form
-          onSubmit={(event) => {
+          onSubmit={async (event) => {
             event.preventDefault();
-            const success = login(username, password);
-            if (!success) {
-              setError('Introduce credenciales validas.');
-              return;
+            setIsSubmitting(true);
+            try {
+              const success = await login(username, password);
+              if (!success) {
+                setError('Introduce credenciales válidas.');
+                return;
+              }
+              setError(null);
+              navigate(redirectTarget, { replace: true });
+            } catch (err) {
+              const details = err instanceof Error ? err.message : 'Error desconocido';
+              setError(`No se pudo iniciar sesión contra el backend. ${details}`);
+            } finally {
+              setIsSubmitting(false);
             }
-            setError(null);
-            navigate(redirectTarget, { replace: true });
           }}
         >
           <Stack gap="md">
@@ -64,12 +73,12 @@ export function LoginPage() {
               </Text>
             ) : null}
 
-            <Button type="submit" fullWidth>
+            <Button type="submit" fullWidth loading={isSubmitting}>
               {t('signIn')}
             </Button>
 
             <Anchor component={Link} to="/">
-              Volver a la zona publica
+              Volver a la zona pública
             </Anchor>
           </Stack>
         </form>

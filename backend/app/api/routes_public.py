@@ -1,11 +1,17 @@
 """
 API Pública (:8000) — Endpoints para el frontend.
 
-Endpoints migrados del original:
+Endpoints principales para frontend:
   - GET  /health                → estado del servicio
-  - POST /login                 → autenticación JWT
-  - POST /getResponseChat       → chat (simulado ahora, RAG en Sprint 4)
-  - GET  /getDatosDashboard     → KPIs para dashboard
+  - POST /auth/login            → autenticación JWT
+  - POST /chat                  → chat conectado al dataset limpio
+  - GET  /dashboard/kpis        → KPIs para dashboard
+  - GET  /dashboard/series      → serie temporal para gráfica
+
+Compatibilidad backward (legacy):
+  - POST /login
+  - POST /getResponseChat
+  - GET  /getDatosDashboard
 
 Endpoints de datos:
   - GET  /api/v1/empleo         → consulta empleo deportivo
@@ -14,16 +20,16 @@ Endpoints de datos:
   - GET  /api/v1/s3/list        → listar keys en S3
 """
 
-import random
 import logging
 
-from fastapi import APIRouter, UploadFile, File, Query, HTTPException
+from fastapi import APIRouter, UploadFile, File, Query, HTTPException, Depends
 
 from app.config import get_settings
 from app.models import LoginRequest, ChatRequest
 from app.auth import create_token
 from app.db.connection import fetch_all
 from app.s3_client import upload_bytes, list_keys
+from app.services.data_service import DataService, get_data_service
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["public"])
@@ -39,17 +45,9 @@ TEST_USER = {
     }
 }
 
-RESPUESTAS_SIMULADAS = [
-    "Según la previsión anual, el sector del deporte podría generar un aumento moderado de empleo.",
-    "La estimación del modelo indica que la demanda de empleo deportivo podría crecer.",
-    "La predicción sugiere que el empleo en el sector deportivo tendrá una evolución positiva.",
-    "El modelo prevé que los puestos de trabajo en el ámbito deportivo podrían incrementarse.",
-    "La previsión permite anticipar tendencias de empleo en el deporte.",
-]
-
 
 # ══════════════════════════════════════════════
-# Endpoints migrados del original
+# Endpoints frontend (actuales)
 # ══════════════════════════════════════════════
 
 @router.get("/health")
@@ -58,8 +56,8 @@ def health_check():
     return {"status": "ok", "nom_user_id": s.nom_user_id}
 
 
-@router.post("/login")
-def login(request: LoginRequest):
+@router.post("/auth/login")
+def auth_login(request: LoginRequest):
     if not request.username or not request.password:
         raise HTTPException(
             status_code=400,
@@ -87,64 +85,66 @@ def login(request: LoginRequest):
     }
 
 
-@router.post("/getResponseChat")
-def get_response_chat(request: ChatRequest):
-    """
-    Chat público. Respuesta simulada por ahora.
-    En Sprint 4 se conectará al RAG (Ollama + ChromaDB).
-    """
-    if not request.question:
+@router.post("/chat")
+def chat(request: ChatRequest, data_service: DataService = Depends(get_data_service)):
+    message = request.message.strip()
+    if not message:
         raise HTTPException(status_code=400, detail="La pregunta no puede estar vacía")
 
-    # TODO Sprint 4: integrar RAG aquí
+    try:
+        answer = data_service.answer_chat(message)
+    except ValueError as error:
+        logger.error("Error resolviendo chat: %s", error)
+        raise HTTPException(status_code=500, detail=str(error)) from error
+
     return {
-        "question": request.question,
-        "answer": random.choice(RESPUESTAS_SIMULADAS),
+        "message": message,
+        "answer": answer,
+    }
+
+
+@router.get("/dashboard/kpis")
+def get_dashboard_kpis(data_service: DataService = Depends(get_data_service)):
+    return data_service.dashboard_kpis()
+
+
+@router.get("/dashboard/series")
+def get_dashboard_series(data_service: DataService = Depends(get_data_service)):
+    return data_service.dashboard_series()
+
+
+# ══════════════════════════════════════════════
+# Endpoints legacy para no romper clientes antiguos
+# ══════════════════════════════════════════════
+
+@router.post("/login")
+def login_legacy(request: LoginRequest):
+    return auth_login(request)
+
+
+@router.post("/getResponseChat")
+def get_response_chat_legacy(request: ChatRequest, data_service: DataService = Depends(get_data_service)):
+    response = chat(request, data_service)
+    return {
+        "question": response["message"],
+        "answer": response["answer"],
     }
 
 
 @router.get("/getDatosDashboard")
-def get_datos_dashboard():
-    """
-    Dashboard KPIs. Intenta leer de RDS; si falla, devuelve datos demo.
-    """
-    try:
-        rows = fetch_all(
-            "SELECT periodo, ocupados_miles FROM empleo_deporte_trimestral "
-            "ORDER BY periodo DESC LIMIT 4"
-        )
-        if rows:
-            valores = [float(r["ocupados_miles"]) for r in rows]
-            ultimo = valores[0]
-            anterior = valores[-1] if len(valores) > 1 else ultimo
-            variacion = round((ultimo - anterior) / anterior * 100, 1) if anterior else 0
+def get_datos_dashboard_legacy(data_service: DataService = Depends(get_data_service)):
+    kpis = data_service.dashboard_kpis()
+    series = data_service.dashboard_series()
 
-            return {
-                "kpis": {
-                    "total_empleo_miles": ultimo,
-                    "variacion_anual_pct": variacion,
-                    "ratio_hombres_mujeres": 1.8,
-                },
-                "empleo_trimestral": [
-                    {"periodo": r["periodo"], "valor": float(r["ocupados_miles"])}
-                    for r in reversed(rows)
-                ],
-            }
-    except Exception as e:
-        logger.warning(f"RDS no disponible para dashboard, usando datos demo: {e}")
-
-    # Fallback: datos demo
     return {
         "kpis": {
-            "total_empleo_miles": 294.1,
-            "variacion_anual_pct": 3.2,
+            "total_empleo_miles": kpis["empleo_total"],
+            "variacion_anual_pct": kpis["growth_pct"],
             "ratio_hombres_mujeres": 1.8,
         },
         "empleo_trimestral": [
-            {"periodo": "2025-1T", "valor": 254.7},
-            {"periodo": "2025-2T", "valor": 246.9},
-            {"periodo": "2025-3T", "valor": 285.1},
-            {"periodo": "2025-4T", "valor": 294.1},
+            {"periodo": f"{item['year']}", "valor": item["value"]}
+            for item in series[-4:]
         ],
     }
 

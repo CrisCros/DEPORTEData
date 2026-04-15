@@ -2,7 +2,7 @@
 Schemas Pydantic — request/response models.
 """
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class LoginRequest(BaseModel):
@@ -11,4 +11,6 @@ class LoginRequest(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    question: str
+    model_config = ConfigDict(populate_by_name=True)
+
+    message: str = Field(min_length=1, alias="question")
