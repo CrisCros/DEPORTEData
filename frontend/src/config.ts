@@ -1,4 +1,6 @@
 type RuntimeConfig = {
+  VITE_API_BASE_URL?: string;
+  VITE_GRAFANA_BASE_URL?: string;
   VITE_PUBLIC_DASHBOARD_URL?: string;
   VITE_ADMIN_HOME_DASHBOARD_URL?: string;
   VITE_ADMIN_TELEMETRY_DASHBOARD_URL?: string;
@@ -23,6 +25,8 @@ function readConfigValue(key: keyof RuntimeConfig): string {
 }
 
 export const appConfig = {
+  apiBaseUrl: readConfigValue('VITE_API_BASE_URL'),
+  grafanaBaseUrl: readConfigValue('VITE_GRAFANA_BASE_URL'),
   publicDashboardUrl: readConfigValue('VITE_PUBLIC_DASHBOARD_URL'),
   adminHomeDashboardUrl: readConfigValue('VITE_ADMIN_HOME_DASHBOARD_URL'),
   adminTelemetryDashboardUrl: readConfigValue('VITE_ADMIN_TELEMETRY_DASHBOARD_URL'),

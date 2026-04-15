@@ -7,7 +7,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://deporte-data-backend.onrender.com/$1"
+      "destination": "http://54.82.14.166:8000/$1"
+    },
+    {
+      "source": "/grafana/(.*)",
+      "destination": "http://54.82.14.166:3000/$1"
     },
     {
       "source": "/(.*)",

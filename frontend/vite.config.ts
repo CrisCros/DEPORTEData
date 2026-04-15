@@ -10,6 +10,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/grafana': {
+        target: 'http://54.82.14.166:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/grafana/, ''),
+      },
     },
   },
 });
