@@ -49,6 +49,19 @@ python3 test_inference.py \
 
 ---
 
+
+## 6) Fusionar LoRA + base (modelo standalone)
+
+```bash
+cd scripts
+python3 merge_model.py \
+  --model_name Qwen/Qwen2.5-1.5B-Instruct \
+  --adapter_path ../outputs \
+  --merged_output_path ../merged_model
+```
+
+El resultado en `../merged_model` ya no requiere PEFT para inferencia.
+
 ## Comando exacto (pipeline básico)
 
 ```bash
