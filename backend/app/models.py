@@ -1,3 +1,7 @@
+"""
+Schemas Pydantic — request/response models.
+"""
+
 from pydantic import BaseModel
 
 
@@ -7,4 +11,4 @@ class LoginRequest(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    message: str
+    question: str
