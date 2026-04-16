@@ -57,7 +57,6 @@ jobs:
       EC2_HOST: ${{ secrets.EC2_HOST }}
       EC2_USER: ${{ secrets.EC2_USER }}
       EC2_PORT: ${{ secrets.EC2_PORT }}
-      EC2_FRONTEND_PATH: ${{ secrets.EC2_FRONTEND_PATH }}
       FRONTEND_VERSION: ${{ needs.build-and-push.outputs.version }}
 
     steps:
@@ -65,7 +64,7 @@ jobs:
         shell: bash
         run: |
           set -eu
-          required=(EC2_HOST EC2_USER EC2_FRONTEND_PATH)
+          required=(EC2_HOST EC2_USER)
           for var in "${required[@]}"; do
             if [ -z "${!var:-}" ]; then
               echo "Missing required secret: $var"
@@ -77,6 +76,8 @@ jobs:
         shell: bash
         run: |
           set -eu
+          HOST="$(printf '%s' "$EC2_HOST" | tr -d '\r')"
+          PORT="$(printf '%s' "${EC2_PORT:-22}" | tr -d '\r')"
           mkdir -p ~/.ssh
           cat > ~/.ssh/ec2_key <<'KEY'
           ${{ secrets.EC2_SSH_KEY }}
@@ -89,15 +90,18 @@ jobs:
             echo "Missing required secret: EC2_SSH_KEY"
             exit 1
           fi
-          ssh-keyscan -p "${EC2_PORT:-22}" "${EC2_HOST}" >> ~/.ssh/known_hosts
+          ssh-keyscan -p "$PORT" "$HOST" >> ~/.ssh/known_hosts
 
       - name: Deploy frontend to EC2
         shell: bash
         run: |
           set -eu
-          ssh -i ~/.ssh/ec2_key -p "${EC2_PORT:-22}" "${EC2_USER}@${EC2_HOST}" <<EOF
+          HOST="$(printf '%s' "$EC2_HOST" | tr -d '\r')"
+          USER="$(printf '%s' "$EC2_USER" | tr -d '\r')"
+          PORT="$(printf '%s' "${EC2_PORT:-22}" | tr -d '\r')"
+          ssh -i ~/.ssh/ec2_key -p "$PORT" "${USER}@${HOST}" <<EOF
           set -eu
-          cd "${EC2_FRONTEND_PATH}"
+          cd /home/ubuntu/frontend
           sed -i "s/^FRONTEND_IMAGE_TAG=.*/FRONTEND_IMAGE_TAG=${FRONTEND_VERSION}/" .env
           sudo docker compose pull
           sudo docker compose up -d
