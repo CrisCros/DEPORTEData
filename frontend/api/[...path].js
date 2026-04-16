@@ -1,5 +1,5 @@
-const DEFAULT_BACKEND_ORIGIN = 'http://54.82.14.166:8000';
-const DEFAULT_GRAFANA_ORIGIN = 'http://54.82.14.166:3000';
+const DEFAULT_BACKEND_ORIGIN = 'http://35.169.239.40:8000';
+const DEFAULT_GRAFANA_ORIGIN = 'http://35.169.239.40:3000';
 
 function normalizeOrigin(value, fallback) {
   const origin = (value || fallback || '').trim();

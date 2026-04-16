@@ -5,7 +5,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api/grafana': {
-                target: 'http://54.82.14.166:3000',
+                target: 'http://35.169.239.40:3000',
                 changeOrigin: true,
                 rewrite: function (path) { return path.replace(/^\/api\/grafana/, ''); },
             },
@@ -15,7 +15,7 @@ export default defineConfig({
                 rewrite: function (path) { return path.replace(/^\/api/, ''); },
             },
             '/grafana': {
-                target: 'http://54.82.14.166:3000',
+                target: 'http://35.169.239.40:3000',
                 changeOrigin: true,
                 rewrite: function (path) { return path.replace(/^\/grafana/, ''); },
             },
