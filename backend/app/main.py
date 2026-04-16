@@ -1,13 +1,10 @@
-"""
-DEPORTEData API — Punto de entrada.
+# DEPORTEData API — Punto de entrada.
 
-Levanta DOS servidores FastAPI:
-  - API Pública  (:8000) → Frontend, login, chat, dashboard, datos
-  - API Privada  (:8001) → Spark jobs, admin S3/RDS
-
-Uso:
-  python -m app.main
-"""
+# Levanta DOS servidores FastAPI:
+#   - API Pública  (:8000) → Frontend, login, chat, dashboard, datos
+#   - API Privada  (:8001) → Spark jobs, admin S3/RDS
+# Uso:
+#   python -m app.main
 
 import asyncio
 import logging

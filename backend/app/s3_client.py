@@ -1,6 +1,4 @@
-"""
-Operaciones S3 — subida de archivos y listado de keys.
-"""
+# Operaciones S3 — subida de archivos y listado de keys.
 
 import boto3
 from app.config import get_settings

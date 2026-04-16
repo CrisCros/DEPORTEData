@@ -1,7 +1,5 @@
-"""
-Job Test — Verifica que spark-submit conecta al cluster.
-Calcula Pi con Monte Carlo. No necesita S3 ni RDS.
-"""
+# Job Test — Verifica que spark-submit conecta al cluster.
+# Calcula Pi con Monte Carlo. No necesita S3 ni RDS.
 
 import random
 from pyspark.sql import SparkSession

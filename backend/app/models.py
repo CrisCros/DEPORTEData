@@ -1,6 +1,4 @@
-"""
-Schemas Pydantic — request/response models.
-"""
+# Schemas Pydantic — request/response models.
 
 from pydantic import BaseModel, Field, ConfigDict
 
