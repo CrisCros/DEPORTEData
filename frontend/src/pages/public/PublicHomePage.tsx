@@ -16,7 +16,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChatbotWidget } from '../../components/ChatbotWidget';
 import { DashboardEmbed } from '../../components/DashboardEmbed';
-import { EmploymentLineChart } from '../../components/EmploymentLineChart';
 import { appConfig } from '../../config';
 import { type DashboardKpis, type DashboardSeries, dashboardApi } from '../../services/api';
 
@@ -38,12 +37,6 @@ function buildGrafanaPanelUrl(panelId: string) {
 
 const publicDashboardUrl = buildGrafanaPanelUrl('panel-1');
 const publicDashboardPanels = [
-  {
-    title: 'Evolucion anual total',
-    description: 'Serie anual del empleo vinculado al deporte para contextualizar la tendencia general.',
-    src: buildGrafanaPanelUrl('panel-1'),
-    minHeight: '420px',
-  },
   {
     title: 'Evolucion trimestral total',
     description: 'Seguimiento trimestral para detectar aceleraciones, frenadas y cambios recientes.',
@@ -85,7 +78,7 @@ const publicDashboardPanels = [
 export function PublicHomePage() {
   const { t } = useTranslation();
   const [kpis, setKpis] = useState<DashboardKpis | null>(null);
-  const [series, setSeries] = useState<DashboardSeries | null>(null);
+  const [, setSeries] = useState<DashboardSeries | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -185,12 +178,6 @@ export function PublicHomePage() {
         </Grid.Col>
       </Grid>
 
-      {error ? (
-        <Paper p="md" mb="lg" withBorder>
-          <Text c="red">{error}</Text>
-        </Paper>
-      ) : null}
-
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="lg" mb="xl">
         {features.map((feature) => {
           const Icon = feature.icon;
@@ -212,7 +199,13 @@ export function PublicHomePage() {
         })}
       </SimpleGrid>
 
-      {series ? <EmploymentLineChart series={series} /> : null}
+      {error ? (
+        <Paper p="md" mb="lg" radius="lg" className="glass-card">
+          <Text size="sm" c="dimmed">
+            Los indicadores en vivo del backend no estan disponibles ahora mismo. La vista publica de Grafana sigue operativa.
+          </Text>
+        </Paper>
+      ) : null}
 
       <div id="public-dashboard">
         <Stack gap="lg">
