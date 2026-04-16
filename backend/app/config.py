@@ -20,6 +20,9 @@ class Settings(BaseSettings):
     db_user: str = "admin"
     db_password: str = "CAMBIAR_AQUI"
     db_name: str = "deportedata"
+    # RDS MySQL: Tabla de usuarios MYSQL
+    name_table_users: str = "deportedata_users"
+
 
     # S3
     s3_bucket_datalake: str = "deportedata-datalake"

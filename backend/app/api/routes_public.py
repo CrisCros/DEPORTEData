@@ -3,36 +3,26 @@ API Pública (:8000) — Endpoints para el frontend.
 
 Endpoints:
   - GET  /health                → estado del servicio
-  - POST /auth/login            → autenticación JWT
+  - POST /auth/login            → autenticación JWT (contra tabla deportedata_users)
   - POST /chat                  → chat conectado al dataset limpio
   - GET  /dashboard/kpis        → KPIs para dashboard
   - GET  /dashboard/series      → serie temporal para gráfica
 """
 
 import logging
+from datetime import datetime
 
 from fastapi import APIRouter, HTTPException, Depends
 
 from app.config import get_settings
 from app.models import LoginRequest, ChatRequest
 from app.auth import create_token
-#from app.db.connection import fetch_all
-#from app.s3_client import upload_bytes, list_keys
+from app.password import verify_password
+from app.db.connection import fetch_one, execute
 from app.services.data_service import DataService, get_data_service
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["public"])
-
-
-# Datos temporales (hasta tener BD poblada)
-TEST_USER = {
-    "admin": {
-        "name": "Administrador",
-        "username": "admin",
-        "password": "*admin1234_prueba",
-        "role": "admin",
-    }
-}
 
 
 # Endpoints frontend
@@ -44,29 +34,62 @@ def health_check():
 
 @router.post("/auth/login")
 def auth_login(request: LoginRequest):
+    """
+    Autentica contra la tabla `deportedata_users`:
+      1. Busca usuario por username_user.
+      2. Verifica password con bcrypt (hash guardado vs texto plano recibido).
+      3. Si coincide: actualiza last_login_user = NOW() y devuelve JWT.
+    """
+    s = get_settings()
+
     if not request.username or not request.password:
         raise HTTPException(
             status_code=400,
             detail="Faltan datos: username y password son obligatorios",
         )
 
-    user = TEST_USER.get(request.username)
+    # 1) Buscar usuario en la BD
+    try:
+        user = fetch_one(
+            f"""
+            SELECT id_user, username_user, password_user, role_user
+            FROM `{s.name_table_users}`
+            WHERE username_user = %s
+            """,
+            (request.username,),
+        )
+    except Exception as e:
+        logger.error("Error consultando usuario: %s", e)
+        raise HTTPException(status_code=500, detail="Error accediendo a la base de datos")
+
     if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    if request.password != user["password"]:
+    # 2) Verificar contraseña (bcrypt compara el texto plano con el hash)
+    if not verify_password(request.password, user["password_user"]):
         raise HTTPException(status_code=401, detail="Contraseña errónea")
 
+    # 3) Actualizar last_login_user
+    try:
+        execute(
+            f"UPDATE `{s.name_table_users}` SET last_login_user = %s WHERE id_user = %s",
+            (datetime.utcnow(), user["id_user"]),
+        )
+    except Exception as e:
+        # No bloqueamos el login si falla el update; solo logueamos.
+        logger.warning("No se pudo actualizar last_login_user: %s", e)
+
+    # 4) Emitir JWT
     token = create_token({
-        "sub": user["username"],
-        "name": user["name"],
-        "role": user["role"],
+        "sub": user["id_user"],
+        "name": user["username_user"],
+        "role": user["role_user"],
+        "id_user": user["id_user"],
     })
 
     return {
-        "name": user["name"],
-        "username": user["username"],
-        "role": user["role"],
+        "username": user["username_user"],
+        "role": user["role_user"],
         "token": token,
     }
 
@@ -83,10 +106,7 @@ def chat(request: ChatRequest, data_service: DataService = Depends(get_data_serv
         logger.error("Error resolviendo chat: %s", error)
         raise HTTPException(status_code=500, detail=str(error)) from error
 
-    return {
-        "message": message,
-        "answer": answer,
-    }
+    return {"message": message, "answer": answer}
 
 
 @router.get("/dashboard/kpis")
