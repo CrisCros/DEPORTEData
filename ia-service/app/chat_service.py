@@ -40,8 +40,12 @@ TOXIC_REPLY_EN = (
 def _is_english(text: str) -> bool:
     """Heurística rápida ES/EN. Si no detecta nada claro, asume ES."""
     t = text.lower()
-    en_hits = sum(w in t for w in (" the ", " is ", " are ", " you ", " what ", " how "))
-    es_hits = sum(w in t for w in (" el ", " la ", " de ", " qué ", " cómo ", " cuántos ", "¿"))
+    en_hits = sum(
+        w in t for w in (" the ", " is ", " are ", " you ", " what ", " how ")
+    )
+    es_hits = sum(
+        w in t for w in (" el ", " la ", " de ", " qué ", " cómo ", " cuántos ", "¿")
+    )
     return en_hits > es_hits
 
 

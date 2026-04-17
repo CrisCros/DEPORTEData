@@ -15,6 +15,7 @@ Formato esperado de cada JSON (el que ya genera tu pipeline `ingesta_pdfs.py`):
 Uso dentro del contenedor (una sola vez o tras cambiar los JSON):
     docker exec -it deportedata-ia python -m app.ingest_chromadb
 """
+
 from __future__ import annotations
 
 import glob

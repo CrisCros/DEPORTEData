@@ -14,6 +14,7 @@ con matching léxico contra una lista mantenida.
 
 La lista es corta por diseño - amplíala en `TOXIC_LEXICON` según veas.
 """
+
 from __future__ import annotations
 
 import logging

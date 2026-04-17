@@ -32,7 +32,12 @@ async def lifespan(app: FastAPI):
     logger.info("Arrancando ia-service...")
     logger.info("  OLLAMA_URL=%s", settings.ollama_url)
     logger.info("  OLLAMA_MODEL=%s", settings.ollama_model)
-    logger.info("  CHROMA=%s:%s/%s", settings.chroma_host, settings.chroma_port, settings.chroma_collection)
+    logger.info(
+        "  CHROMA=%s:%s/%s",
+        settings.chroma_host,
+        settings.chroma_port,
+        settings.chroma_collection,
+    )
 
     moderator = Moderator(threshold=settings.toxic_threshold)
     chat_service = ChatService(settings=settings, moderator=moderator)
