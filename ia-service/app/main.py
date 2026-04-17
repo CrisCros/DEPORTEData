@@ -1,10 +1,8 @@
-"""
-FastAPI del ia-service.
+# FastAPI del ia-service.
+# Endpoints:
+#  - GET  /health
+#  - POST /ia/chat   → { message, has_toxic, key_words_toxic_classification }
 
-Endpoints:
-  - GET  /health
-  - POST /ia/chat   → { message, has_toxic, key_words_toxic_classification }
-"""
 from __future__ import annotations
 
 import logging

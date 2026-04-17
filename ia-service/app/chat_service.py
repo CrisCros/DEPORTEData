@@ -1,20 +1,9 @@
-"""
-Chat service: pipeline completo.
+# user_message -> Moderador (Detoxify + léxico)
 
-    user_message
-         │
-         ▼
-    Moderador (Detoxify + léxico)
-         │
-         ├─ tóxico → plantilla fija (NO llamamos al LLM) → JSON
-         │
-         └─ limpio → RAG (ChromaDB) → Ollama (Qwen 3B, format=schema) → JSON
-"""
 from __future__ import annotations
 
 import json
 import logging
-from typing import List
 
 import chromadb
 import httpx

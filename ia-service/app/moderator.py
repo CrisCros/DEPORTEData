@@ -12,7 +12,7 @@ no por palabra. Para poblar `key_words_toxic_classification` necesitamos
 identificar qué palabras concretas son las ofensivas, y eso se hace mejor
 con matching léxico contra una lista mantenida.
 
-La lista es corta por diseño — amplíala en `TOXIC_LEXICON` según veas.
+La lista es corta por diseño - amplíala en `TOXIC_LEXICON` según veas.
 """
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ import logging
 import re
 import unicodedata
 from dataclasses import dataclass
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Set
 
 from detoxify import Detoxify
 
@@ -38,7 +38,7 @@ CATEGORY_MAP: Dict[str, str] = {
 }
 
 # Lista negra léxica. Cada entrada: palabra -> set de categorías.
-# Ampliable. No es exhaustiva — el clasificador captura el resto por semántica.
+# Ampliable. No es exhaustiva - el clasificador captura el resto por semántica.
 TOXIC_LEXICON: Dict[str, Set[str]] = {
     # Insultos genéricos / vulgar (ES)
     "idiota": {"insult", "ofensive"},

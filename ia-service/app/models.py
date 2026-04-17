@@ -1,10 +1,7 @@
-"""
-Schemas Pydantic para el ia-service.
+# Schemas Pydantic para el ia-service.
+# El CHAT_RESPONSE_JSON_SCHEMA se pasa tal cual a Ollama en el parámetro `format`
+# para forzar decoding estructurado (Ollama >= 0.5). Esto garantiza que el modelo no pueda salirse del schema.
 
-El CHAT_RESPONSE_JSON_SCHEMA se pasa tal cual a Ollama en el parámetro `format`
-para forzar decoding estructurado (Ollama >= 0.5). Esto garantiza que el modelo
-NO pueda salirse del schema.
-"""
 from typing import List
 from pydantic import BaseModel, Field
 

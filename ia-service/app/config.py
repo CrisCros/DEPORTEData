@@ -1,4 +1,4 @@
-"""Configuración centralizada del ia-service."""
+# Configuración centralizada del ia-service.
 from functools import lru_cache
 from pydantic_settings import BaseSettings
 
