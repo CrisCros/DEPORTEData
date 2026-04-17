@@ -3,8 +3,8 @@ API Pública (:8000) — Endpoints para el frontend.
 
 Endpoints:
   - GET  /health                → estado del servicio
-  - POST /auth/login            → autenticación JWT (contra tabla deportedata_users)
-  - POST /chat                  → chat conectado al dataset limpio
+  - POST /auth/login            → autenticación JWT
+  - POST /chat                  → chat RAG con moderación (delega al ia-service)
   - GET  /dashboard/kpis        → KPIs para dashboard
   - GET  /dashboard/series      → serie temporal para gráfica
 """
@@ -12,6 +12,7 @@ Endpoints:
 import logging
 from datetime import datetime
 
+import httpx
 from fastapi import APIRouter, HTTPException, Depends
 
 from app.config import get_settings
@@ -38,7 +39,7 @@ def auth_login(request: LoginRequest):
     Autentica contra la tabla `deportedata_users`:
       1. Busca usuario por username_user.
       2. Verifica password con bcrypt (hash guardado vs texto plano recibido).
-      3. Si coincide: actualiza last_login_user = NOW() y devuelve JWT.
+      3. Si coincide: actualiza last_login_user y devuelve JWT.
     """
     s = get_settings()
 
@@ -48,7 +49,7 @@ def auth_login(request: LoginRequest):
             detail="Faltan datos: username y password son obligatorios",
         )
 
-    # 1) Buscar usuario en la BD
+    # Buscar usuario en la BD
     try:
         user = fetch_one(
             f"""
@@ -65,11 +66,11 @@ def auth_login(request: LoginRequest):
     if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    # 2) Verificar contraseña (bcrypt compara el texto plano con el hash)
+    # Verificar contraseña (bcrypt compara el texto plano con el hash)
     if not verify_password(request.password, user["password_user"]):
         raise HTTPException(status_code=401, detail="Contraseña errónea")
 
-    # 3) Actualizar last_login_user
+    # Actualizar last_login_user
     try:
         execute(
             f"UPDATE `{s.name_table_users}` SET last_login_user = %s WHERE id_user = %s",
@@ -79,7 +80,7 @@ def auth_login(request: LoginRequest):
         # No bloqueamos el login si falla el update; solo logueamos.
         logger.warning("No se pudo actualizar last_login_user: %s", e)
 
-    # 4) Emitir JWT
+    # Emitir JWT
     token = create_token({
         "sub": user["id_user"],
         "name": user["username_user"],
@@ -94,19 +95,49 @@ def auth_login(request: LoginRequest):
     }
 
 
+# ─── /chat: proxy estricto al ia-service ─────────────────────────────
 @router.post("/chat")
-def chat(request: ChatRequest, data_service: DataService = Depends(get_data_service)):
-    message = request.message.strip()
+def chat(request: ChatRequest):
+    """
+    Contrato EXACTO del enunciado (sin añadir/renombrar campos):
+
+        request:  { "message": "<pregunta>" }
+        response: {
+            "message": "<respuesta textual del modelo>",
+            "has_toxic": <bool>,
+            "key_words_toxic_classification": [ {word, categories[]}, ... ]
+        }
+
+    El backend NO procesa el mensaje: hace proxy puro al ia-service
+    (Detoxify + RAG + Ollama), que ya devuelve ese JSON tal cual. Esto
+    mantiene el backend tonto y concentra toda la lógica de IA en un
+    único servicio.
+    """
+    s = get_settings()
+
+    message = (request.message or "").strip()
     if not message:
         raise HTTPException(status_code=400, detail="La pregunta no puede estar vacía")
 
+    url = f"{s.ia_service_url.rstrip('/')}/ia/chat"
     try:
-        answer = data_service.answer_chat(message)
-    except ValueError as error:
-        logger.error("Error resolviendo chat: %s", error)
-        raise HTTPException(status_code=500, detail=str(error)) from error
+        with httpx.Client(timeout=s.ia_service_timeout_seconds) as client:
+            r = client.post(url, json={"message": message})
+            r.raise_for_status()
+            ia = r.json()
+    except httpx.HTTPError as exc:
+        logger.exception("Error llamando al ia-service (%s): %s", url, exc)
+        raise HTTPException(
+            status_code=502,
+            detail=f"IA service no disponible: {exc}",
+        )
 
-    return {"message": message, "answer": answer}
+    # Devolvemos solo los tres campos del contrato.
+    return {
+        "message": ia.get("message", ""),
+        "has_toxic": bool(ia.get("has_toxic", False)),
+        "key_words_toxic_classification": ia.get("key_words_toxic_classification", []),
+    }
 
 
 @router.get("/dashboard/kpis")

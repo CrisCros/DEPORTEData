@@ -42,7 +42,7 @@ export function ChatbotWidget() {
 
     try {
       const response = await chatApi.sendMessage(content);
-      setMessages((prev) => [...prev, { role: 'assistant', text: response.answer }]);
+      setMessages((prev) => [...prev, { role: 'assistant', text: response.message }]);
     } catch (err) {
       const details = err instanceof Error ? err.message : 'Error desconocido';
       setMessages((prev) => [

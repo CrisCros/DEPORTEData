@@ -12,9 +12,15 @@ export type DashboardKpis = {
   latest_values: DashboardPoint[];
 };
 
+export type ToxicKeyword = {
+  word: string;
+  categories: string[];
+};
+
 export type ChatResponse = {
   message: string;
-  answer: string;
+  has_toxic: boolean;
+  key_words_toxic_classification: ToxicKeyword[];
 };
 
 export type LoginResponse = {
