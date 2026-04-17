@@ -9,7 +9,7 @@ from functools import lru_cache
 
 class Settings(BaseSettings):
     # Identificación (nombre del grupo o proyecto)
-    nom_user_id: str = "proyecto_deportedata" 
+    nom_user_id: str = "proyecto_deportedata"
 
     # Spark Master
     spark_master_ip: str = "CAMBIAR_AQUI"
@@ -36,6 +36,10 @@ class Settings(BaseSettings):
     # Puertos
     public_api_port: int = 8000
     private_api_port: int = 8001
+
+    # IA Service (nuevo) ─────────────────────────────────────────────
+    ia_service_url: str = "http://ia-service:8100"
+    ia_service_timeout_seconds: int = 120
 
     @property
     def spark_master_url(self) -> str:

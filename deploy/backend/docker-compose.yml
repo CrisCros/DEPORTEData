@@ -1,71 +1,106 @@
-# ============================================================
+# =====================================================================
 # DEPORTEData — docker-compose.yml
 #
 # Despliega el backend desde GHCR.
-# La versión de la imagen se controla desde .env (BACKEND_IMAGE_TAG)
+# La versión de la imagen se controla desde .env (BACKEND_IMAGE_TAG y IA_SERVICE_IMAGE_TAG) 
 #
-# Uso:
-#   sudo docker compose pull
-#   sudo docker compose up -d
+# 4 servicios:
+#   - ollama      (LLM local Qwen2.5-3B GGUF, red interna)
+#   - chromadb    (vector store persistente, red interna)
+#   - ia-service  (FastAPI: moderador + RAG + Ollama, red interna)
+#   - backend     (FastAPI pública/privada, expuesto al host)
 #
-# Sprint 4: descomentar los servicios de Ollama y ChromaDB para RAG.
-# ============================================================
+# Solo el backend publica puertos al host. El resto viajan por la red
+# bridge del compose (service discovery por nombre de servicio).
+#
+# Uso (primer arranque, desde ~/ec2-5):
+#     cp .env.example .env
+#     nano .env                    # rellenar secretos (DB, JWT, etc)
+#     docker compose pull
+#     docker compose up -d
+#     docker exec -it deportedata-ollama ollama pull ${OLLAMA_MODEL}
+#     docker exec -it deportedata-ia python -m app.ingest_chromadb
+# =====================================================================
 
 services:
 
-  # ── Backend (FastAPI + Spark submit) ──────────
-  backend:
-    image: ghcr.io/criscros/deportedata/backend:${BACKEND_IMAGE_TAG:-latest}
-    container_name: deportedata-backend
-    network_mode: host
-    env_file: .env
+  # ─── Ollama (LLM) ─────────────────────────────────────────────────
+  ollama:
+    image: ollama/ollama:0.5.7
+    container_name: deportedata-ollama
     restart: unless-stopped
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_NUM_PARALLEL=1
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
-  # ── Sprint 4: Ollama (LLM + Embeddings) ──────
-  # Descomentar cuando se integre el RAG
-  #
-  # ollama:
-  #   image: ollama/ollama:latest
-  #   container_name: deportedata-ollama
-  #   ports:
-  #     - "11434:11434"
-  #   volumes:
-  #     - ollama_data:/root/.ollama
-  #   restart: unless-stopped
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 5
+  # ─── ChromaDB ─────────────────────────────────────────────────────
+  chromadb:
+    image: chromadb/chroma:0.5.23
+    container_name: deportedata-chromadb
+    restart: unless-stopped
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/api/v1/heartbeat || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
-  # ── Sprint 4: ChromaDB (Vector Store) ─────────
-  # Descomentar cuando se integre el RAG
-  #
-  # chromadb:
-  #   image: chromadb/chroma:0.5.0
-  #   container_name: deportedata-chromadb
-  #   ports:
-  #     - "8100:8000"
-  #   volumes:
-  #     - chroma_data:/chroma/chroma
-  #   environment:
-  #     - IS_PERSISTENT=TRUE
-  #     - ANONYMIZED_TELEMETRY=FALSE
-  #   restart: unless-stopped
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 3
+  # ─── IA Service (moderador + RAG + Ollama) ────────────────────────
+  ia-service:
+    image: ghcr.io/${GHCR_USER}/deportedata/ia-service:${IA_SERVICE_IMAGE_TAG:-latest}
+    container_name: deportedata-ia
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+    volumes:
+      # Montamos los JSON del repo (data-ia/data_json) como solo-lectura
+      # para que el script de ingesta los lea.
+      - ./data_json:/data_json:ro
+    depends_on:
+      ollama:
+        condition: service_healthy
+      chromadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8100/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
-# ── Sprint 4: Volúmenes para persistencia ──────
-# Descomentar junto con los servicios
-#
-# volumes:
-#   ollama_data:
-#   chroma_data:
+  # ─── Backend (FastAPI pública + privada) ──────────────────────────
+  backend:
+    image: ghcr.io/${GHCR_USER}/deportedata/backend:${BACKEND_IMAGE_TAG:-latest}
+    container_name: deportedata-backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - IA_SERVICE_URL=http://ia-service:8100
+    ports:
+      - "8000:8000"   # API pública (frontend)
+      - "8001:8001"   # API privada (admin)
+    depends_on:
+      ia-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  ollama_data:
+  chroma_data:

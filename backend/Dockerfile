@@ -10,12 +10,14 @@ RUN apt-get update && apt-get install -y \
 
 RUN update-alternatives --install "/usr/bin/python" "python" "$(which python3)" 1
 
-# Python (+ librerias ejem. "pandas"): FastAPI + PySpark + AWS + MySQL + JWT + bcrypt
+# Python (+ librerias ejem. "pandas"): FastAPI + PySpark + AWS + MySQL + JWT + bcrypt + httpx
+# NUEVO: httpx se usa para llamar al ia-service desde el endpoint /chat.
 RUN pip3 install --no-cache-dir \
     pyspark==3.5.5 boto3 mysql-connector-python pandas \
     "fastapi>=0.110" "uvicorn[standard]>=0.27" "pydantic-settings>=2.0" \
     python-multipart "python-jose[cryptography]>=3.3" \
-    "bcrypt>=4.1,<5"
+    "bcrypt>=4.1,<5" \
+    "httpx>=0.27,<1"
 
 # Spark 3.5.5 (para spark-submit al master remoto)
 ENV SPARK_VERSION=3.5.5 \
