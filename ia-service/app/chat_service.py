@@ -1,5 +1,4 @@
 # user_message -> Moderador (Detoxify + léxico)
-
 from __future__ import annotations
 
 import json
@@ -8,6 +7,7 @@ import logging
 import chromadb
 import httpx
 from chromadb.config import Settings as ChromaSettings
+from chromadb.utils import embedding_functions
 
 from app.config import Settings
 from app.models import ChatResponse, CHAT_RESPONSE_JSON_SCHEMA, ToxicWord
@@ -36,9 +36,14 @@ TOXIC_REPLY_EN = (
     "Can I help you with a question about sport-related employment in Spain?"
 )
 
+# DEBE coincidir EXACTAMENTE con el modelo usado en ingest_chromadb.py.
+# Si los embeddings de ingesta y de query no coinciden, el retrieval es basura
+# (vectores en espacios diferentes -> similitud coseno sin sentido).
+EMBEDDING_MODEL_NAME = "paraphrase-multilingual-MiniLM-L12-v2"
+
 
 def _is_english(text: str) -> bool:
-    """Heurística rápida ES/EN. Si no detecta nada claro, asume ES."""
+    # Heurística rápida ES/EN. Si no detecta nada claro, asume ES.
     t = text.lower()
     en_hits = sum(
         w in t for w in (" the ", " is ", " are ", " you ", " what ", " how ")
@@ -58,30 +63,45 @@ class ChatService:
             port=settings.chroma_port,
             settings=ChromaSettings(anonymized_telemetry=False),
         )
+
+        # Embedding multilingüe (es+en) — DEBE coincidir con ingest_chromadb.py
+        self._embed_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
+            model_name=EMBEDDING_MODEL_NAME
+        )
+        self._collection_name = settings.chroma_collection
+
+        # Sanity check al arrancar (no cacheamos, solo verificamos)
         try:
-            self._collection = self._chroma.get_or_create_collection(
-                name=settings.chroma_collection
-            )
+            col = self._get_collection()
             logger.info(
-                "Conectado a ChromaDB (col=%s, docs=%s)",
-                settings.chroma_collection,
-                self._collection.count(),
+                "Conectado a ChromaDB (col=%s, docs=%s, embed=%s)",
+                self._collection_name,
+                col.count(),
+                EMBEDDING_MODEL_NAME,
             )
         except Exception as exc:
-            logger.exception("No se pudo conectar a ChromaDB: %s", exc)
-            self._collection = None
+            logger.exception("No se pudo conectar a ChromaDB en arranque: %s", exc)
 
         self._http = httpx.AsyncClient(timeout=settings.ollama_timeout_seconds)
 
     async def close(self) -> None:
         await self._http.aclose()
 
-    # ─── RAG ──────────────────────────────────────────────────────
+    def _get_collection(self):
+        """Obtiene la colección viva (no cacheada) con el embedding correcto.
+        Re-fetch en cada query para soportar `ingest_chromadb --recreate`
+        sin necesidad de reiniciar el contenedor..
+        """
+        return self._chroma.get_collection(
+            name=self._collection_name,
+            embedding_function=self._embed_fn,
+        )
+
+    # RAG
     def _retrieve(self, query: str, k: int = 5) -> str:
-        if self._collection is None:
-            return ""
         try:
-            res = self._collection.query(query_texts=[query], n_results=k)
+            collection = self._get_collection()
+            res = collection.query(query_texts=[query], n_results=k)
             docs = res.get("documents", [[]])[0] if res else []
         except Exception as exc:
             logger.exception("Fallo en query ChromaDB: %s", exc)
@@ -90,9 +110,9 @@ class ChatService:
             return ""
         return "\n\n--- Fragmento ---\n".join(docs)
 
-    # ─── LLM ──────────────────────────────────────────────────────
+    # LLM
     async def _generate(self, message: str, context: str) -> str:
-        """Llama a Ollama con format=JSON schema. Devuelve solo el 'message'."""
+        # Llama a Ollama con format=JSON schema. Devuelve solo el 'message'.
         user_prompt = (
             f"CONTEXTO:\n{context if context else '(no hay contexto recuperado)'}\n\n"
             f"PREGUNTA DEL USUARIO: {message}\n\n"
@@ -124,7 +144,7 @@ class ChatService:
             logger.warning("Ollama devolvió JSON inválido, fallback a texto plano.")
             return content.strip() or "No he podido generar una respuesta."
 
-    # ─── Pipeline ─────────────────────────────────────────────────
+    # Pipeline
     async def answer(self, message: str) -> ChatResponse:
         mod = self._moderator.moderate(message)
 
