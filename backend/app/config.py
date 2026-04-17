@@ -37,9 +37,9 @@ class Settings(BaseSettings):
     public_api_port: int = 8000
     private_api_port: int = 8001
 
-    # IA Service (nuevo) ─────────────────────────────────────────────
+    # IA Service (nuevo)
     ia_service_url: str = "http://ia-service:8100"
-    ia_service_timeout_seconds: int = 120
+    ia_service_timeout_seconds: int = 300
 
     @property
     def spark_master_url(self) -> str:
