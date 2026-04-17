@@ -1,0 +1,19 @@
+# --- FastAPI ---
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+pydantic==2.9.2
+pydantic-settings==2.6.1
+httpx==0.28.1
+
+# --- RAG ---
+chromadb==0.5.23
+
+# --- Moderación toxicidad ---
+# Detoxify trae torch + transformers. Fijamos versiones estables.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1+cpu
+transformers==4.46.3
+detoxify==0.5.2
+
+# Utilidades
+sentencepiece==0.2.0
