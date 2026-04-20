@@ -2,11 +2,7 @@ import { Alert, Badge, Button, Card, Group, Progress, SimpleGrid, Stack, Table, 
 import { Activity, BarChart3, Bot, Clock3, Eye, MousePointerClick, RefreshCw, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DashboardEmbed } from '../../components/DashboardEmbed';
-import { appConfig } from '../../config';
 import { type UsageEvent, type UsageSummary, usageApi } from '../../services/api';
-
-const usageUrl = appConfig.adminUsageDashboardUrl;
 
 const EVENT_LABEL_KEYS: Record<string, string> = {
   public_page_view: 'eventPublicPageView',
@@ -193,7 +189,6 @@ export function UsagePage() {
           </Table>
         </Table.ScrollContainer>
       </Card>
-      <DashboardEmbed src={usageUrl} title={t('usageTitle')} description={t('usagePanelDescription')} />
     </Stack>
   );
 }

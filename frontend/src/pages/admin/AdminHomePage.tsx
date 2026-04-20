@@ -2,11 +2,8 @@ import { Badge, Card, Group, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@
 import { Activity, Bot, ShieldCheck, UserRound } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DashboardEmbed } from '../../components/DashboardEmbed';
-import { appConfig } from '../../config';
 import { type UsageSummary, usageApi } from '../../services/api';
 
-const adminHomeUrl = appConfig.adminHomeDashboardUrl;
 const EVENT_LABEL_KEYS: Record<string, string> = {
   public_page_view: 'eventPublicPageView',
   admin_page_view: 'eventAdminPageView',
@@ -67,7 +64,7 @@ export function AdminHomePage() {
               <Title order={3}>{t('eventsByType')}</Title>
               <Text c="dimmed" size="sm">{t('eventsByTypeDescription')}</Text>
             </div>
-            <Badge color="cyan" variant="light">{summary.total_events} total</Badge>
+            <Badge color="cyan" variant="light">{summary.total_events} {t('total')}</Badge>
           </Group>
           <Group gap="sm">
             {summary.by_type.slice(0, 6).map((item) => (
@@ -78,8 +75,6 @@ export function AdminHomePage() {
           </Group>
         </Card>
       ) : null}
-
-      <DashboardEmbed src={adminHomeUrl} title={t('navHome')} description={t('adminSummary')} />
     </Stack>
   );
 }
