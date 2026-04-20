@@ -26,14 +26,14 @@ export function LoginPage() {
             try {
               const success = await login(username, password);
               if (!success) {
-                setError('Introduce credenciales válidas.');
+                setError(t('loginInvalidCredentials'));
                 return;
               }
               setError(null);
               navigate(redirectTarget, { replace: true });
             } catch (err) {
-              const details = err instanceof Error ? err.message : 'Error desconocido';
-              setError(`No se pudo iniciar sesión contra el backend. ${details}`);
+              const details = err instanceof Error ? err.message : t('unknownError');
+              setError(`${t('loginBackendError')} ${details}`);
             } finally {
               setIsSubmitting(false);
             }
@@ -42,7 +42,7 @@ export function LoginPage() {
           <Stack gap="md">
             <div>
               <Badge variant="light" color="cyan" mb="sm">
-                Admin access
+                {t('loginBadge')}
               </Badge>
               <Title order={1}>{t('loginTitle')}</Title>
               <Text c="dimmed" size="sm">
@@ -78,7 +78,7 @@ export function LoginPage() {
             </Button>
 
             <Anchor component={Link} to="/">
-              Volver a la zona pública
+              {t('backToPublic')}
             </Anchor>
           </Stack>
         </form>

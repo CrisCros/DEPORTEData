@@ -49,12 +49,10 @@ export function AdminLayout() {
             <div>
               <Group gap="xs">
                 <Title order={3}>{t('appName')}</Title>
-                <Badge color="cyan" variant="light">
-                  Admin
-                </Badge>
+                <Badge color="cyan" variant="light">Admin</Badge>
               </Group>
               <Text size="sm" c="dimmed">
-                Centro interno de seguimiento y operacion
+                {t('adminHeaderSubtitle')}
               </Text>
             </div>
           </Group>
@@ -75,13 +73,13 @@ export function AdminLayout() {
         <Stack gap="md">
           <Paper p="md" bg="rgba(255,255,255,0.05)" bd="1px solid rgba(255,255,255,0.08)">
             <Text size="xs" tt="uppercase" fw={700} c="cyan.1">
-              Workspace
+              {t('workspaceLabel')}
             </Text>
             <Title order={4} c="white" mt={4}>
-              Operacion y analitica
+              {t('adminWorkspaceTitle')}
             </Title>
             <Text size="sm" c="slate.1" mt="xs">
-              Navegacion privada para dashboards de control, seguridad y uso.
+              {t('adminWorkspaceDescription')}
             </Text>
           </Paper>
 

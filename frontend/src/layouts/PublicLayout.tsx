@@ -28,12 +28,10 @@ export function PublicLayout() {
               <div>
                 <Group gap="xs">
                   <Title order={2}>{t('appName')}</Title>
-                  <Badge variant="light" color="cyan">
-                    Cliente
-                  </Badge>
+                  <Badge variant="light" color="cyan">{t('clientArea')}</Badge>
                 </Group>
                 <Text size="sm" c="dimmed">
-                  Analitica deportiva y acceso publico
+                  {t('publicHeaderSubtitle')}
                 </Text>
               </div>
             </Group>
@@ -51,14 +49,14 @@ export function PublicLayout() {
         <Group justify="space-between" mb="lg">
           <div>
             <Text size="sm" c="dimmed">
-              Espacio publico
+              {t('publicSpace')}
             </Text>
             <Text fw={700}>{t('appName')}</Text>
           </div>
           <LanguageSwitcher />
         </Group>
         <Text size="sm" c="dimmed">
-          Landing preparada para dashboard abierto, acceso admin y asistente contextual.
+          {t('publicNavbarDescription')}
         </Text>
       </AppShell.Navbar>
 

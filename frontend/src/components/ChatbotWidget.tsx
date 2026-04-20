@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MessageCircleMore } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { chatApi } from '../services/api';
 
@@ -25,10 +25,27 @@ export function ChatbotWidget() {
   const [opened, { open, close }] = useDisclosure(false);
   const { t } = useTranslation();
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'assistant', text: 'Hola, pregúntame sobre la evolución del empleo deportivo.' },
+    { role: 'assistant', text: t('chatGreeting') },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (opened) {
+      endOfMessagesRef.current?.scrollIntoView({ block: 'end' });
+    }
+  }, [messages, opened]);
+
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length !== 1 || prev[0].role !== 'assistant') {
+        return prev;
+      }
+
+      return [{ role: 'assistant', text: t('chatGreeting') }];
+    });
+  }, [t]);
 
   const handleSend = async () => {
     const content = input.trim();
@@ -44,10 +61,10 @@ export function ChatbotWidget() {
       const response = await chatApi.sendMessage(content);
       setMessages((prev) => [...prev, { role: 'assistant', text: response.message }]);
     } catch (err) {
-      const details = err instanceof Error ? err.message : 'Error desconocido';
+      const details = err instanceof Error ? err.message : t('unknownError');
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', text: `No pude consultar el backend: ${details}` },
+        { role: 'assistant', text: `${t('chatBackendError')} ${details}` },
       ]);
     } finally {
       setLoading(false);
@@ -80,27 +97,35 @@ export function ChatbotWidget() {
           <Group gap="sm">
             <Text fw={700}>{t('chatbotTitle')}</Text>
             <Badge color="cyan" variant="light">
-              Datos reales
+              {t('realData')}
             </Badge>
           </Group>
         }
         withCloseButton
+        styles={{
+          body: {
+            display: 'flex',
+            flexDirection: 'column',
+            height: 'calc(100vh - 76px)',
+          },
+        }}
       >
-        <Stack gap="md">
-          <Stack gap="xs" style={{ maxHeight: 360, overflowY: 'auto' }}>
+        <Stack gap="md" style={{ flex: 1, minHeight: 0 }}>
+          <Stack gap="xs" style={{ flex: 1, minHeight: 0, overflowY: 'auto', paddingRight: 4 }}>
             {messages.map((message, index) => (
               <Paper key={`${message.role}-${index}`} p="sm" radius="md" bg={message.role === 'user' ? 'blue.0' : 'gray.1'}>
                 <Text size="sm" fw={600} mb={2}>
-                  {message.role === 'user' ? 'Tú' : 'DEPORTEData'}
+                  {message.role === 'user' ? t('you') : 'DEPORTEData'}
                 </Text>
                 <Text size="sm">{message.text}</Text>
               </Paper>
             ))}
+            <div ref={endOfMessagesRef} />
           </Stack>
 
           <Group align="end" wrap="nowrap">
             <TextInput
-              placeholder="Ejemplo: ¿Cómo ha crecido el empleo?"
+              placeholder={t('chatPlaceholder')}
               value={input}
               onChange={(event) => setInput(event.currentTarget.value)}
               onKeyDown={(event) => {
@@ -112,7 +137,7 @@ export function ChatbotWidget() {
               style={{ flex: 1 }}
             />
             <Button onClick={() => void handleSend()} loading={loading}>
-              Enviar
+              {t('send')}
             </Button>
           </Group>
         </Stack>

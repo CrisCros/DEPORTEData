@@ -1,4 +1,5 @@
 import { Alert, Paper, Stack, Text, Title } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 
 type EmploymentSeriesPoint = {
   year: number;
@@ -10,10 +11,12 @@ type EmploymentLineChartProps = {
 };
 
 export function EmploymentLineChart({ series }: EmploymentLineChartProps) {
+  const { t } = useTranslation();
+
   if (!series.length) {
     return (
-      <Alert color="yellow" title="Sin datos">
-        No hay serie temporal disponible.
+      <Alert color="yellow" title={t('noData')}>
+        {t('noTimeSeries')}
       </Alert>
     );
   }
@@ -36,9 +39,9 @@ export function EmploymentLineChart({ series }: EmploymentLineChartProps) {
     <Paper withBorder radius="lg" p="md" className="glass-card">
       <Stack gap="sm">
         <div>
-          <Title order={3}>Evolución anual del empleo deportivo</Title>
+          <Title order={3}>{t('employmentChartTitle')}</Title>
           <Text c="dimmed" size="sm">
-            Serie limpia anual (una observación por año).
+            {t('employmentChartDescription')}
           </Text>
         </div>
         <div style={{ overflowX: 'auto' }}>

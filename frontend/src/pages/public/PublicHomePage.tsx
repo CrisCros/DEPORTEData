@@ -36,45 +36,6 @@ function buildGrafanaPanelUrl(panelId: string) {
 }
 
 const publicDashboardUrl = buildGrafanaPanelUrl('panel-1');
-const publicDashboardPanels = [
-  {
-    title: 'Evolucion trimestral total',
-    description: 'Seguimiento trimestral para detectar aceleraciones, frenadas y cambios recientes.',
-    src: buildGrafanaPanelUrl('panel-2'),
-    minHeight: '420px',
-  },
-  {
-    title: 'Distribucion por sexo',
-    description: 'Comparativa entre hombres y mujeres en el empleo deportivo agregado.',
-    src: buildGrafanaPanelUrl('panel-3'),
-    minHeight: '360px',
-  },
-  {
-    title: 'Tipo de empleo',
-    description: 'Desglose entre empleo principal y secundario vinculado al deporte.',
-    src: buildGrafanaPanelUrl('panel-4'),
-    minHeight: '360px',
-  },
-  {
-    title: 'Distribucion por edad',
-    description: 'Foto del ultimo periodo disponible por grupos de edad.',
-    src: buildGrafanaPanelUrl('panel-5'),
-    minHeight: '360px',
-  },
-  {
-    title: 'Distribucion por estudios',
-    description: 'Comparativa del empleo deportivo segun nivel educativo.',
-    src: buildGrafanaPanelUrl('panel-6'),
-    minHeight: '360px',
-  },
-  {
-    title: 'Jornada y situacion profesional',
-    description: 'Peso relativo del empleo asalariado, no asalariado y del tipo de jornada.',
-    src: buildGrafanaPanelUrl('panel-7'),
-    minHeight: '360px',
-  },
-];
-
 export function PublicHomePage() {
   const { t } = useTranslation();
   const [kpis, setKpis] = useState<DashboardKpis | null>(null);
@@ -93,8 +54,8 @@ export function PublicHomePage() {
         setKpis(kpisResponse);
         setSeries(seriesResponse);
       } catch (err) {
-        const details = err instanceof Error ? err.message : 'Error desconocido';
-        setError(`No se pudieron cargar los datos del backend. ${details}`);
+        const details = err instanceof Error ? err.message : t('unknownError');
+        setError(`${t('dashboardLoadError')} ${details}`);
       }
     };
 
@@ -104,18 +65,57 @@ export function PublicHomePage() {
   const features = [
     {
       icon: LayoutDashboard,
-      title: 'Dashboard conectado',
-      text: 'KPIs y visualizaciones combinan datos del backend con paneles embebidos de Grafana.',
+      title: t('featureDashboardTitle'),
+      text: t('featureDashboardText'),
     },
     {
       icon: Globe,
-      title: 'Soporte multilenguaje',
-      text: 'Cambio de idioma rapido para demos, usuarios internos y presentaciones.',
+      title: t('featureLanguageTitle'),
+      text: t('featureLanguageText'),
     },
     {
       icon: Bot,
-      title: 'Asistente contextual',
-      text: 'Chat integrado con el backend para responder preguntas sobre el dataset.',
+      title: t('featureAssistantTitle'),
+      text: t('featureAssistantText'),
+    },
+  ];
+
+  const publicDashboardPanels = [
+    {
+      title: t('panelQuarterlyTitle'),
+      description: t('panelQuarterlyDescription'),
+      src: buildGrafanaPanelUrl('panel-2'),
+      minHeight: '420px',
+    },
+    {
+      title: t('panelSexTitle'),
+      description: t('panelSexDescription'),
+      src: buildGrafanaPanelUrl('panel-3'),
+      minHeight: '360px',
+    },
+    {
+      title: t('panelEmploymentTypeTitle'),
+      description: t('panelEmploymentTypeDescription'),
+      src: buildGrafanaPanelUrl('panel-4'),
+      minHeight: '360px',
+    },
+    {
+      title: t('panelAgeTitle'),
+      description: t('panelAgeDescription'),
+      src: buildGrafanaPanelUrl('panel-5'),
+      minHeight: '360px',
+    },
+    {
+      title: t('panelStudiesTitle'),
+      description: t('panelStudiesDescription'),
+      src: buildGrafanaPanelUrl('panel-6'),
+      minHeight: '360px',
+    },
+    {
+      title: t('panelWorkdayTitle'),
+      description: t('panelWorkdayDescription'),
+      src: buildGrafanaPanelUrl('panel-7'),
+      minHeight: '360px',
     },
   ];
 
@@ -127,7 +127,7 @@ export function PublicHomePage() {
             <Stack gap="lg">
               <div>
                 <Badge size="lg" radius="sm" variant="light" color="cyan">
-                  Analitica deportiva unificada
+                  {t('publicBadge')}
                 </Badge>
                 <Title order={1} mt="md" maw={760} style={{ fontSize: 'clamp(2.4rem, 5vw, 4.4rem)', lineHeight: 1 }}>
                   {t('publicTitle')}
@@ -136,7 +136,7 @@ export function PublicHomePage() {
                   {t('publicDescription')}
                 </Text>
                 <Text size="sm" mt="sm" maw={540}>
-                  Una capa visual para seguir rendimiento, actividad y operacion desde un unico punto.
+                  {t('publicIntro')}
                 </Text>
               </div>
 
@@ -152,7 +152,7 @@ export function PublicHomePage() {
               <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md">
                 <Paper p="lg" className="metric-card">
                   <Text size="xs" tt="uppercase" c="dimmed" fw={700}>
-                    Empleo total ({kpis?.latest_year ?? '-'})
+                    {t('metricEmploymentTotal')} ({kpis?.latest_year ?? '-'})
                   </Text>
                   <Title order={2} mt={6}>
                     {kpis ? `${kpis.empleo_total}k` : '...'}
@@ -160,7 +160,7 @@ export function PublicHomePage() {
                 </Paper>
                 <Paper p="lg" className="metric-card">
                   <Text size="xs" tt="uppercase" c="dimmed" fw={700}>
-                    Crecimiento anual
+                    {t('metricAnnualGrowth')}
                   </Text>
                   <Title order={2} mt={6}>
                     {kpis ? `${kpis.growth_pct}%` : '...'}
@@ -168,7 +168,7 @@ export function PublicHomePage() {
                 </Paper>
                 <Paper p="lg" className="metric-card">
                   <Text size="xs" tt="uppercase" c="dimmed" fw={700}>
-                    Ultimos valores
+                    {t('metricLatestValues')}
                   </Text>
                   <Title order={4} mt={6}>
                     {kpis ? kpis.latest_values.map((v) => `${v.year}:${v.value}`).join(' · ') : '...'}
@@ -204,7 +204,7 @@ export function PublicHomePage() {
       {error ? (
         <Paper p="md" mb="lg" radius="lg" className="glass-card">
           <Text size="sm" c="dimmed">
-            Los indicadores en vivo del backend no estan disponibles ahora mismo. La vista publica de Grafana sigue operativa.
+            {t('liveIndicatorsUnavailable')}
           </Text>
         </Paper>
       ) : null}
@@ -214,7 +214,7 @@ export function PublicHomePage() {
           <DashboardEmbed
             src={publicDashboardUrl}
             title={t('viewPublicDashboard')}
-            description="Vista principal con el panel de tendencia anual del reto C."
+            description={t('mainTrendPanelDescription')}
             minHeight="72vh"
           />
 
