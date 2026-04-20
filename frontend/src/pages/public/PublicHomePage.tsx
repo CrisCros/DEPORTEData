@@ -149,7 +149,8 @@ export function PublicHomePage() {
                 </Button>
               </Group>
 
-              <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md">
+              {kpis ? (
+                <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md">
                 <Paper p="lg" className="metric-card">
                   <Text size="xs" tt="uppercase" c="dimmed" fw={700}>
                     {t('metricEmploymentTotal')} ({kpis?.latest_year ?? '-'})
@@ -174,7 +175,8 @@ export function PublicHomePage() {
                     {kpis ? kpis.latest_values.map((v) => `${v.year}:${v.value}`).join(' · ') : '...'}
                   </Title>
                 </Paper>
-              </SimpleGrid>
+                </SimpleGrid>
+              ) : null}
             </Stack>
           </Paper>
         </Grid.Col>
