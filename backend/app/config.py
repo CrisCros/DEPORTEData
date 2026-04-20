@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     db_name: str = "deportedata"
     # RDS MySQL: Tabla de usuarios MYSQL
     name_table_users: str = "deportedata_users"
+    name_table_usage_events: str = "deportedata_usage_events"
 
 
     # S3

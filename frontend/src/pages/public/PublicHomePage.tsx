@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { ChatbotWidget } from '../../components/ChatbotWidget';
 import { DashboardEmbed } from '../../components/DashboardEmbed';
 import { appConfig } from '../../config';
-import { type DashboardKpis, type DashboardSeries, dashboardApi } from '../../services/api';
+import { type DashboardKpis, type DashboardSeries, dashboardApi, usageApi } from '../../services/api';
 
 const grafanaBaseUrl = appConfig.grafanaBaseUrl || '/api/grafana/d-solo/adp79lb/principal';
 const grafanaRange = 'orgId=1&from=1302878323442&to=1776263923442&timezone=browser&dtab=new-row';
@@ -82,6 +82,8 @@ export function PublicHomePage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    void usageApi.track('public_page_view', '/', { section: 'home' });
+
     const loadDashboard = async () => {
       try {
         const [kpisResponse, seriesResponse] = await Promise.all([

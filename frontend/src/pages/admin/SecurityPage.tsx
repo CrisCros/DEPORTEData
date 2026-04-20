@@ -1,11 +1,17 @@
 import { Card, Group, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { Eye, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { useEffect } from 'react';
 import { DashboardEmbed } from '../../components/DashboardEmbed';
 import { appConfig } from '../../config';
+import { usageApi } from '../../services/api';
 
 const securityUrl = appConfig.adminSecurityDashboardUrl;
 
 export function SecurityPage() {
+  useEffect(() => {
+    void usageApi.track('admin_page_view', '/admin/seguridad', { section: 'security' });
+  }, []);
+
   return (
     <Stack gap="lg">
       <div>

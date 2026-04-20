@@ -1,5 +1,7 @@
 # Schemas Pydantic — request/response models.
 
+from typing import Any
+
 from pydantic import BaseModel, Field, ConfigDict
 
 
@@ -19,3 +21,9 @@ class AddUserRequest(BaseModel):
     username: str = Field(min_length=1, max_length=100)
     pwd: str = Field(min_length=4, max_length=200)
     role: str = Field(default="user", max_length=50)
+
+
+class UsageEventRequest(BaseModel):
+    event_type: str = Field(min_length=1, max_length=80)
+    page: str | None = Field(default=None, max_length=200)
+    metadata: dict[str, Any] = Field(default_factory=dict)

@@ -1,17 +1,26 @@
 import { Card, Group, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { Activity, ShieldCheck, UserRound } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DashboardEmbed } from '../../components/DashboardEmbed';
 import { appConfig } from '../../config';
+import { type UsageSummary, usageApi } from '../../services/api';
 
 const adminHomeUrl = appConfig.adminHomeDashboardUrl;
 
 export function AdminHomePage() {
   const { t } = useTranslation();
+  const [summary, setSummary] = useState<UsageSummary | null>(null);
+
+  useEffect(() => {
+    void usageApi.track('admin_page_view', '/admin', { section: 'home' });
+    usageApi.getSummary().then(setSummary).catch(() => setSummary(null));
+  }, []);
+
   const stats = [
-    { label: 'Latencia media', value: '214 ms', icon: Activity },
-    { label: 'Eventos de seguridad', value: '03', icon: ShieldCheck },
-    { label: 'Sesiones activas', value: '128', icon: UserRound },
+    { label: 'Eventos 24h', value: summary ? String(summary.events_24h) : '...', icon: Activity },
+    { label: 'Eventos 7 dias', value: summary ? String(summary.events_7d) : '...', icon: ShieldCheck },
+    { label: 'Actores unicos', value: summary ? String(summary.unique_actors) : '...', icon: UserRound },
   ];
 
   return (
