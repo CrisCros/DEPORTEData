@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     ollama_url: str = "http://ollama:11434"
     ollama_model: str = "qwen2.5:3b-instruct-q4_K_M"
     ollama_temperature: float = 0.2
-    ollama_timeout_seconds: int = 90
+    ollama_timeout_seconds: int = 300
 
     # ChromaDB
     chroma_host: str = "chromadb"
