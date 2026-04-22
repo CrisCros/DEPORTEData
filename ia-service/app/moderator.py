@@ -122,7 +122,7 @@ class Moderator:
         cleaned = re.sub(r"\s+", " ", text).strip()
         if len(cleaned) <= max_len:
             return cleaned
-        return cleaned[: max_len].rstrip() + "..."
+        return cleaned[:max_len].rstrip() + "..."
 
     def _active_categories(self, scores: Dict[str, float]) -> Set[str]:
         active = set()
@@ -178,10 +178,12 @@ class Moderator:
         # categorías detectadas (o 'others' si por alguna razón no hay).
         if has_toxic and not word_hits:
             cats = sorted(classifier_cats) if classifier_cats else ["others"]
-            word_hits = [{
-                "word": self._excerpt(message),
-                "categories": cats,
-            }]
+            word_hits = [
+                {
+                    "word": self._excerpt(message),
+                    "categories": cats,
+                }
+            ]
 
         logger.info(
             "Moderación: scores=%s cats_activas=%s hits=%s",
