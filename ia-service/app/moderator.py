@@ -38,10 +38,15 @@ CATEGORY_MAP: Dict[str, str] = {
     "sexual_explicit": "sex",
 }
 
+# Longitud máxima del mensaje que se guarda como palabra sintética cuando
+# el clasificador dispara toxicidad pero ningún token del TOXIC_LEXICON lo
+# hace. Se añade "..." si el mensaje original excede este límite.
+SYNTHETIC_WORD_MAX_LEN = 200
+
 # Lista negra léxica. Cada entrada: palabra -> set de categorías.
 # Ampliable. No es exhaustiva - el clasificador captura el resto por semántica.
 TOXIC_LEXICON: Dict[str, Set[str]] = {
-    # Insultos genéricos / vulgar (ES)
+    # Insultos genéricos/vulgar (ES)
     "idiota": {"insult", "ofensive"},
     "imbecil": {"insult", "ofensive"},
     "estupido": {"insult", "ofensive"},
@@ -70,7 +75,7 @@ TOXIC_LEXICON: Dict[str, Set[str]] = {
     "bitch": {"insult", "vulgar", "ofensive"},
     "bastard": {"insult", "vulgar", "ofensive"},
     "damn": {"vulgar", "ofensive"},
-    # Contenido sexual explicito (ES/EN mínimos)
+    # Contenido sexual explicito (ES/EN)
     "porno": {"sex", "vulgar"},
     "porn": {"sex", "vulgar"},
     "sexo": {"sex"},
@@ -78,7 +83,7 @@ TOXIC_LEXICON: Dict[str, Set[str]] = {
     "matar": {"threat"},
     "matarte": {"threat"},
     "kill": {"threat"},
-    # Xenofobia / ataques identidad (mínimos — añadir con cabeza)
+    # Xenofobia/ataques identidad
     "sudaca": {"xenophobia", "ofensive"},
     "moro": {"xenophobia", "ofensive"},
 }
@@ -110,6 +115,14 @@ class Moderator:
     def _tokenize(text: str) -> List[str]:
         # Palabras de >= 2 letras, sin signos
         return re.findall(r"[a-zñ]{2,}", text)
+
+    @staticmethod
+    def _excerpt(text: str, max_len: int = SYNTHETIC_WORD_MAX_LEN) -> str:
+        """Devuelve `text` recortado a `max_len` caracteres con '...' al final si se trunca. Colapsa espacios en blanco para legibilidad."""
+        cleaned = re.sub(r"\s+", " ", text).strip()
+        if len(cleaned) <= max_len:
+            return cleaned
+        return cleaned[: max_len].rstrip() + "..."
 
     def _active_categories(self, scores: Dict[str, float]) -> Set[str]:
         active = set()
@@ -143,7 +156,7 @@ class Moderator:
     def moderate(self, message: str) -> ModerationResult:
         normalized = self._normalize(message)
 
-        # 1) Clasificador semántico
+        # Clasificador semántico
         try:
             scores = self._model.predict(message)
         except Exception as exc:
@@ -152,16 +165,23 @@ class Moderator:
 
         classifier_cats = self._active_categories(scores)
 
-        # 2) Cruce léxico
+        # Cruce léxico
         word_hits = self._find_words(normalized, classifier_cats)
 
-        # 3) Decisión: tóxico si el clasificador dispara O hay hits léxicos
+        # Decisión: tóxico si el clasificador dispara O hay hits léxicos
         has_toxic = bool(classifier_cats) or bool(word_hits)
 
-        # Si hubo clasificación pero ningún token cruzado, devolvemos la
-        # marca global sin palabras (schema admite lista vacía).
-        if has_toxic and not word_hits and classifier_cats:
-            word_hits = []  # no inventamos palabras
+        # Caso borde: el clasificador dice "tóxico" pero ningún token está
+        # en el léxico. No podemos señalar una palabra concreta, pero el
+        # admin tiene que ver *algo* en el registro de auditoría. Guardamos
+        # un extracto del mensaje original como "word" y usamos las
+        # categorías detectadas (o 'others' si por alguna razón no hay).
+        if has_toxic and not word_hits:
+            cats = sorted(classifier_cats) if classifier_cats else ["others"]
+            word_hits = [{
+                "word": self._excerpt(message),
+                "categories": cats,
+            }]
 
         logger.info(
             "Moderación: scores=%s cats_activas=%s hits=%s",

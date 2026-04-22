@@ -93,11 +93,12 @@ async function requestJson<T>(path: string, init?: RequestInit, options?: { auth
   return response.json() as Promise<T>;
 }
 
-async function requestEmpty(path: string, init?: RequestInit): Promise<void> {
+async function requestEmpty(path: string, init?: RequestInit, options?: { auth?: boolean }): Promise<void> {
   const response = await fetch(`${baseUrl}${path}`, {
     ...init,
     headers: {
       ...(init?.body !== undefined ? { 'Content-Type': 'application/json' } : {}),
+      ...(options?.auth ? authHeaders() : {}),
       ...(init?.headers ?? {}),
     },
   });
@@ -132,10 +133,14 @@ export const authApi = {
 export const usageApi = {
   track: async (event_type: string, page?: string, metadata: Record<string, unknown> = {}) => {
     try {
-      await requestEmpty('/usage/events', {
-        method: 'POST',
-        body: JSON.stringify({ event_type, page, metadata }),
-      });
+      await requestEmpty(
+        '/usage/events',
+        {
+          method: 'POST',
+          body: JSON.stringify({ event_type, page, metadata }),
+        },
+        { auth: true },
+      );
     } catch {
       // La telemetria de uso no debe romper la experiencia principal.
     }

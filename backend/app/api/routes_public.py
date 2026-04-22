@@ -2,11 +2,13 @@
 API Pública (:8000) — Endpoints para el frontend.
 
 Endpoints:
-  - GET  /health                → estado del servicio
-  - POST /auth/login            → autenticación JWT
-  - POST /chat                  → chat RAG con moderación (delega al ia-service)
-  - GET  /dashboard/kpis        → KPIs para dashboard
-  - GET  /dashboard/series      → serie temporal para gráfica
+  - GET  /health              -> estado del servicio
+  - POST /auth/login          -> autenticación JWT
+  - POST /chat                -> chat RAG con moderación (delega al ia-service)
+  - GET  /dashboard/kpis      -> KPIs para dashboard
+  - GET  /dashboard/series    -> serie temporal para gráfica
+  - POST /usage/events        -> registro de eventos de uso
+  - GET  /admin/usage/summary -> resumen de eventos (requiere token)
 """
 
 import logging
@@ -14,6 +16,7 @@ from datetime import datetime
 
 import httpx
 from fastapi import APIRouter, HTTPException, Depends, Request
+from jose import jwt, JWTError
 
 from app.config import get_settings
 from app.models import LoginRequest, ChatRequest, UsageEventRequest
@@ -33,6 +36,33 @@ def _request_context(request: Request) -> tuple[str | None, str | None]:
     if not ip_address and request.client:
         ip_address = request.client.host
     return ip_address, request.headers.get("user-agent")
+
+
+def _user_from_request(request: Request) -> dict | None:
+    """Extrae el usuario del JWT si el request trae uno válido.
+    Útil para endpoints *opcionales* en los que el usuario puede estar
+    autenticado o no (ej. /usage/events lo llaman tanto visitantes
+    anónimos como admins). Devuelve None si no hay token o es inválido.
+    """
+    auth_header = request.headers.get("authorization", "")
+    if not auth_header.lower().startswith("bearer "):
+        return None
+    token = auth_header.split(" ", 1)[1].strip()
+    if not token:
+        return None
+
+    s = get_settings()
+    try:
+        payload = jwt.decode(token, s.jwt_secret_key, algorithms=[s.jwt_algorithm])
+    except JWTError:
+        return None
+
+    id_user = payload.get("id_user")
+    name    = payload.get("name")
+    role    = payload.get("role")
+    if not (id_user and name):
+        return None
+    return {"id_user": id_user, "name": name, "role": role}
 
 
 def _record_event_safely(
@@ -170,21 +200,32 @@ def chat(request: ChatRequest, http_request: Request):
             detail=f"IA service no disponible: {exc}",
         )
 
+    # Guardar en metadata los resultados de la moderación para auditoría.
+    # key_words_toxic_classification es la lista de {word, categories[]} que
+    # devuelve el ia-service; la almacenamos tal cual para poder inspeccionar
+    # en el panel admin qué palabras concretas se marcaron y con qué categorías.
+    has_toxic = bool(ia.get("has_toxic", False))
+    toxic_words = ia.get("key_words_toxic_classification", []) or []
+
     _record_event_safely(
         http_request,
         "chat_message_sent",
         page="/",
         metadata={
             "message_length": len(message),
-            "has_toxic": bool(ia.get("has_toxic", False)),
+            "has_toxic": has_toxic,
+            "key_words_toxic_classification": toxic_words,
         },
+        # Si el visitante está autenticado (admin probando el chat), lo
+        # registramos. Si no (caso normal), se guarda sin usuario.
+        user=_user_from_request(http_request),
     )
 
     # Devolvemos solo los tres campos del contrato.
     return {
         "message": ia.get("message", ""),
-        "has_toxic": bool(ia.get("has_toxic", False)),
-        "key_words_toxic_classification": ia.get("key_words_toxic_classification", []),
+        "has_toxic": has_toxic,
+        "key_words_toxic_classification": toxic_words,
     }
 
 
@@ -200,11 +241,17 @@ def chat(request: ChatRequest, http_request: Request):
 
 @router.post("/usage/events", status_code=204)
 def track_usage_event(payload: UsageEventRequest, request: Request):
+    """Registra un evento de uso genérico.
+    Si el request trae Authorization: Bearer <jwt>, el usuario se extrae
+    del token y se guarda en id_user/username_user/user_role. Si no, el
+    evento se guarda con esas columnas en NULL (visitante anónimo).
+    """
     _record_event_safely(
         request,
         payload.event_type,
         page=payload.page,
         metadata=payload.metadata,
+        user=_user_from_request(request),
     )
 
 
