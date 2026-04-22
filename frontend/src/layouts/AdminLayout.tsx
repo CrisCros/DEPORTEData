@@ -11,7 +11,7 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { ChartColumn, Gauge, Lock, UserRoundCog } from 'lucide-react';
+import { ChartColumn, Gauge, Lock, ShieldAlert, UserRoundCog } from 'lucide-react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/AuthContext';
@@ -21,6 +21,7 @@ const navigationItems = [
   { to: '/admin/telemetrias', key: 'navTelemetry', icon: ChartColumn },
   { to: '/admin/seguridad', key: 'navSecurity', icon: Lock },
   { to: '/admin/uso', key: 'navUsage', icon: UserRoundCog },
+  { to: '/admin/insultos', key: 'navInsults', icon: ShieldAlert },
 ] as const;
 
 export function AdminLayout() {

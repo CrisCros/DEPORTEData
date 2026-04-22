@@ -7,6 +7,7 @@ import { LoginPage } from './pages/admin/LoginPage';
 import { SecurityPage } from './pages/admin/SecurityPage';
 import { TelemetryPage } from './pages/admin/TelemetryPage';
 import { UsagePage } from './pages/admin/UsagePage';
+import { InsultsPage } from './pages/admin/InsultsPage';
 import { PublicHomePage } from './pages/public/PublicHomePage';
 
 export const appRouter = createBrowserRouter([
@@ -46,6 +47,10 @@ export const appRouter = createBrowserRouter([
           {
             path: 'uso',
             element: <UsagePage />,
+          },
+          {
+            path: 'insultos',
+            element: <InsultsPage />,
           },
         ],
       },

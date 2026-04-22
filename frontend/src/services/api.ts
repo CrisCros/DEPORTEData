@@ -44,6 +44,36 @@ export type UsageEventTypeCount = {
   count: number;
 };
 
+export type ToxicWordCount = {
+  word: string;
+  count: number;
+};
+
+export type ToxicCategoryCount = {
+  category: string;
+  count: number;
+};
+
+export type ToxicEvent = {
+  id_event: number;
+  page?: string | null;
+  username_user?: string | null;
+  user_role?: string | null;
+  ip_address?: string | null;
+  created_at: string;
+  message_length: number;
+  toxic_words: ToxicKeyword[];
+};
+
+export type ToxicitySummary = {
+  total: number;
+  toxic_24h: number;
+  toxic_7d: number;
+  by_word: ToxicWordCount[];
+  by_category: ToxicCategoryCount[];
+  recent_events: ToxicEvent[];
+};
+
 export type UsageSummary = {
   total_events: number;
   events_24h: number;
@@ -53,6 +83,7 @@ export type UsageSummary = {
   admin_page_views_7d: number;
   by_type: UsageEventTypeCount[];
   recent_events: UsageEvent[];
+  toxicity: ToxicitySummary;
 };
 
 import { appConfig } from '../config';
