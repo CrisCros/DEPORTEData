@@ -2,8 +2,9 @@
 
 **Proyecto:** DEPORTEData (Reto C: previsión del empleo vinculado al deporte en España)  
 **Corte de memoria:** 22 de abril de 2026  
-**Base documental:** estado actual del repositorio y guías operativas incluidas.
-**Direccion HTTP:** http://deportedata-demo.duckdns.org   (if labs EC2 running)
+**Base documental:** estado actual del repositorio y guías operativas incluidas.  
+**Dirección HTTP:** [http://deportedata-demo.duckdns.org](http://deportedata-demo.duckdns.org) *(si las instancias EC2 del lab están en ejecución)*
+
 ---
 
 ## 1) Visión global de lo realizado
