@@ -36,7 +36,7 @@
 │   ├── app/
 │   ├── spark-jobs/
 │   ├── Dockerfile
-│   ├── .env.example  # el 
+│   ├── .env.example
 │   └── guia_xxxx.md
 │
 ├── ia-service/   
@@ -54,7 +54,7 @@
 │   └── backend/   # EC2 ( [API] y [model_ia + chrmomadb] )
 │       ├── data_json/            # archivos *.json para ingesta de chromadb
 │       ├── docker-compose.yml
-│       └── .env.example
+│       └── .env.example          # combinacion .env.example de "backend" y de "ia-service"
 │
 ├── .gitignore
 └── README.md                     # ← Este archivo
