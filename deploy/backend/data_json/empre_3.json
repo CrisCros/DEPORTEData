@@ -1,0 +1,39 @@
+{
+  "ids": [
+    "dirce_ambito_001",
+    "dirce_ambito_002",
+    "dirce_ambito_003",
+    "dirce_ambito_004"
+  ],
+  "documents": [
+    "El detalle de los aspectos metodológicos del proyecto citado puede consultarse en el apartado correspondiente en www.ine.es. 3. Delimitación del ámbito. La delimitación de las actividades económicas a incluir en el ámbito deportivo de los datos que se presentan ha venido condicionada por la disponibilidad de desgloses de la Clasificación Nacional de Actividades Económicas (CNAE 2009).",
+    "Concretamente se han considerado las empresas cuya actividad económica principal es una de las siguientes (se incluye su código según la CNAE 2009): 323 Fabricación de artículos de deporte (excepto prendas de vestir y calzado). 4764 Comercio al por menor de artículos deportivos en establecimientos especializados. 8551 Educación deportiva y recreativa. 931 Actividades deportivas. Comprende la gestión de instalaciones deportivas, las actividades de los clubes deportivos y de gimnasios entre otros.",
+    "La ampliación de la información proporcionada por la EEE para datos referidos al 2016 en adelante ha permitido incorporar información de determinados agregados económicos de la 4764 y de las siguientes actividades que componen la 931: 9311 Gestión de instalaciones deportivas. 9312 Actividades de los clubes deportivos. 9313 Actividades de los gimnasios. 9319 Otras actividades deportivas.",
+    "No ha sido posible sin embargo contemplar otras actividades deportivas para las que no se dispone de información con el desglose necesario, por estar incluidas en epígrafes agregados a otras actividades no consideradas deportivas."
+  ],
+  "metadatas": [
+    {
+      "capitulo": "3. Delimitacion del ambito",
+      "tema": "metodologia_y_clasificacion",
+      "clasificacion_referencia": "CNAE 2009",
+      "enlace_metodologia": "www.ine.es"
+    },
+    {
+      "capitulo": "3. Delimitacion del ambito",
+      "tema": "codigos_cnae_principales",
+      "sectores": "fabricacion, comercio, educacion, actividades_deportivas",
+      "codigos_incluidos": "323, 4764, 8551, 931"
+    },
+    {
+      "capitulo": "3. Delimitacion del ambito",
+      "tema": "ampliacion_eee_desglose",
+      "año_referencia_desde": 2016,
+      "codigos_desglose": "9311, 9312, 9313, 9319"
+    },
+    {
+      "capitulo": "3. Delimitacion del ambito",
+      "tema": "limitaciones_estudio",
+      "motivo_exclusion": "falta de desglose necesario en epigrafes agregados"
+    }
+  ]
+}

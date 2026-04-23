@@ -1,0 +1,39 @@
+{
+  "ids": [
+    "dirce_fuentes_001",
+    "dirce_fuentes_002",
+    "dirce_fuentes_003",
+    "dirce_fuentes_004"
+  ],
+  "documents": [
+    "2. Fuentes de información. Las fuentes de información utilizadas han sido, para los datos relativos al número de empresas, el Directorio Central de Empresas (DIRCE), y para los datos relativos a magnitudes económicas de determinadas ramas de actividad, la Estadística Estructural de Empresas (EEE). En todos los casos se trata de operaciones estadísticas pertenecientes al Plan Estadístico Nacional desarrolladas por el Instituto Nacional de Estadística.",
+    "Por lo que se refiere al DIRCE, su principal objetivo es disponer de un marco para la elaboración de encuestas y proporcionar datos estructurales del número de empresas existentes en España clasificados según diversas variables. Se trata de una estadística administrativa elaborada a partir de datos primarios procedentes de fuentes de origen administrativo y estadístico (Impuesto sobre Actividades Económicas, Retenciones sobre Rentas de Trabajo, Cuentas de Cotización de la Seguridad Social y otras fuentes administrativas y estadísticas), complementados con la información procedente de las operaciones estadísticas corrientes del INE.",
+    "Los datos son sometidos a un sistema de armonización e integración con el objeto de conseguir reunir en un sistema de información único las empresas españolas ubicadas en el territorio nacional. Para una correcta interpretación de los resultados ha de tenerse en cuenta que los datos de cada año recogidos en esta fuente se corresponden al primer día del año.",
+    "Por lo que respecta a las encuestas de empresas, de la industria, el comercio y los servicios, su finalidad es disponer de una información básica para el conocimiento de la realidad de estos sectores económicos y para el análisis de sus principales características estructurales."
+  ],
+  "metadatas": [
+    {
+      "capitulo": "2. Fuentes de informacion",
+      "organismo": "INE",
+      "fuentes_citadas": "DIRCE, EEE",
+      "tema": "origen_datos"
+    },
+    {
+      "capitulo": "2. Fuentes de informacion",
+      "fuente": "DIRCE",
+      "tema": "objetivo_y_origen_administrativo",
+      "fuentes_primarias": "IAE, Retenciones, Seguridad Social"
+    },
+    {
+      "capitulo": "2. Fuentes de informacion",
+      "fuente": "DIRCE",
+      "tema": "metodologia_armonizacion",
+      "nota_temporal": "datos corresponden al primer dia del año"
+    },
+    {
+      "capitulo": "2. Fuentes de informacion",
+      "tema": "encuestas_empresas",
+      "sectores": "industria, comercio, servicios"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "ids": [
+    "dirce_materia_001",
+    "dirce_materia_002"
+  ],
+  "documents": [
+    "1. Materia objeto de la investigación estadística. En este capítulo se ofrece la información disponible relativa al número de empresas cuya actividad económica principal pertenece al ámbito deportivo, delimitado a estos efectos tal y como se describe más adelante, ofreciéndose desgloses por las siguientes características: Actividad económica principal, Tamaño según el número de asalariados, Condición jurídica de la empresa, Comunidad autónoma, Sexo de la persona física (en empresas cuyo soporte legal es una persona física).",
+    "Por otra parte, para aquellas actividades en las que ello ha sido posible, se ofrecen determinados agregados económicos tales como volumen de negocio, valor de la producción, valor añadido, gastos de personal e inversión en activos materiales."
+  ],
+  "metadatas": [
+    {
+      "capitulo": "1. Materia objeto",
+      "tema": "variables_desglose",
+      "variables": "actividad principal, tamano, condicion juridica, ccaa, sexo persona fisica"
+    },
+    {
+      "capitulo": "1. Materia objeto",
+      "tema": "agregados_economicos",
+      "variables": "volumen de negocio, valor produccion, valor anadido, gastos personal, inversion activos"
+    }
+  ]
+}

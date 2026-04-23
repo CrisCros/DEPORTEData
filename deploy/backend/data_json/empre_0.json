@@ -1,0 +1,63 @@
+{
+  "ids": [
+    "dirce_deportes_2024_001",
+    "dirce_deportes_2024_002",
+    "dirce_deportes_2024_003",
+    "dirce_deportes_2024_004",
+    "dirce_deportes_2024_005",
+    "dirce_deportes_2024_006"
+  ],
+  "documents": [
+    "Los resultados citados proceden del Directorio Central de Empresas (DIRCE), operación estadística elaborada por el INE. Para la delimitación del ámbito deportivo se han considerado aquellas empresas con actividad económica principal deportiva, siempre que el desglose haya estado disponible tal y como se señala en las notas metodológicas del capítulo.",
+    "El número de empresas recogidas en el DIRCE cuya actividad económica principal es deportiva, ascendió a 43.829 a principios del 2024. Esta cifra supone el 1,3% del total de empresas recogidas en el DIRCE.",
+    "La mayor parte de ellas, el 80,2%, 35.159, se corresponde con actividades deportivas tales como la gestión de instalaciones, las actividades de los clubes deportivos o de gimnasios. Un 0,6% se dedica principalmente a la fabricación de artículos de deporte. Las empresas dedicadas al comercio al por menor de artículos deportivos en establecimientos especializados suponen un 10,0%, mientras que las dedicadas a la Educación deportiva y recreativa suponen un 9,2%.",
+    "El 37,4% son empresas sin asalariados, el 47,7% son de pequeño tamaño, de 1 a 5 trabajadores; el 14,0% tienen de 6 a 49 asalariados y el 1,0% restante son empresas de mayor tamaño, de 50 asalariados en adelante.",
+    "Al igual que sucede en el conjunto total de empresas, más de la mitad se concentran en las comunidades autónomas de Cataluña, 16,9%, Andalucía, 15,5%, Comunidad de Madrid, 13,5%, y Comunitat Valenciana, 11,5%.",
+    "Para una correcta interpretación de estas cifras ha de tenerse en cuenta que, de forma análoga a lo señalado en otros epígrafes, no ha sido posible contemplar en esta explotación otras actividades deportivas para las que no se dispone de desgloses suficientes en la fuente estadística citada, tal y como puede consultarse en las notas metodológicas. El detalle metodológico de esta explotación, junto a sus resultados, puede consultarse en el capítulo 2 de esta publicación."
+  ],
+  "metadatas": [
+    {
+      "fuente": "DIRCE",
+      "organismo": "INE",
+      "tema": "introduccion_metodologia",
+      "año": 2024
+    },
+    {
+      "fuente": "DIRCE",
+      "tema": "volumen_total",
+      "año": 2024,
+      "total_empresas_deportivas": 43829,
+      "porcentaje_nacional": 1.3
+    },
+    {
+      "fuente": "DIRCE",
+      "tema": "distribucion_por_actividad",
+      "año": 2024,
+      "porcentaje_instalaciones_gimnasios": 80.2,
+      "porcentaje_comercio": 10.0,
+      "porcentaje_educacion": 9.2,
+      "porcentaje_fabricacion": 0.6
+    },
+    {
+      "fuente": "DIRCE",
+      "tema": "distribucion_por_tamano",
+      "año": 2024,
+      "porcentaje_sin_asalariados": 37.4,
+      "porcentaje_1_a_5_empleados": 47.7,
+      "porcentaje_6_a_49_empleados": 14.0,
+      "porcentaje_mas_de_50_empleados": 1.0
+    },
+    {
+      "fuente": "DIRCE",
+      "tema": "distribucion_geografica",
+      "año": 2024,
+      "ccaa_destacadas": "Cataluña, Andalucía, Madrid, Comunitat Valenciana"
+    },
+    {
+      "fuente": "DIRCE",
+      "tema": "notas_metodologicas",
+      "año": 2024,
+      "capitulo_referencia": 2
+    }
+  ]
+}

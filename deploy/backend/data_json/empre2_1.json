@@ -1,0 +1,68 @@
+{
+  "ids": [
+    "tabla_2.1_sector_total",
+    "tabla_2.1_sector_931",
+    "tabla_2.1_sector_323",
+    "tabla_2.1_sector_4764",
+    "tabla_2.1_sector_8551"
+  ],
+  "documents": [
+    "En 2024, el total general de empresas vinculadas al deporte fue de 43.829, lo que supone el 1,3% del total de empresas en España. En el año anterior, 2023, la cifra total era de 41.180 empresas.",
+    "En 2024, el sector de Actividades deportivas (CNAE 931) contaba con 35.159 empresas, representando el 80,2% del total del ámbito deportivo. En el año 2023, este sector registraba 32.640 empresas (79,3%).",
+    "En 2024, el sector de Fabricación de artículos de deporte (CNAE 323) contaba con 284 empresas, representando el 0,7% del total del ámbito deportivo. En el año 2023, este sector registraba 281 empresas (0,6%).",
+    "En 2024, el sector de Comercio al por menor de artículos deportivos (CNAE 4764) contaba con 4.372 empresas, representando el 10,0% del total del ámbito deportivo. En el año 2023, este sector registraba 4.506 empresas (10,9%).",
+    "En 2024, el sector de Educación deportiva y recreativa (CNAE 8551) contaba con 4.014 empresas, representando el 9,1% del total del ámbito deportivo. En el año 2023, este sector registraba 3.753 empresas (9,2%)."
+  ],
+  "metadatas": [
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.1. Empresas vinculadas al deporte por actividad económica principal",
+      "sector": "Total general",
+      "cnae": "TOTAL",
+      "empresas_2023": 41180,
+      "empresas_2024": 43829,
+      "distribucion_pct_2023": 100.0,
+      "distribucion_pct_2024": 100.0
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.1. Empresas vinculadas al deporte por actividad económica principal",
+      "sector": "Actividades deportivas",
+      "cnae": "931",
+      "empresas_2023": 32640,
+      "empresas_2024": 35159,
+      "distribucion_pct_2023": 79.3,
+      "distribucion_pct_2024": 80.2
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.1. Empresas vinculadas al deporte por actividad económica principal",
+      "sector": "Fabricación de artículos de deporte",
+      "cnae": "323",
+      "empresas_2023": 281,
+      "empresas_2024": 284,
+      "distribucion_pct_2023": 0.6,
+      "distribucion_pct_2024": 0.7
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.1. Empresas vinculadas al deporte por actividad económica principal",
+      "sector": "Comercio al por menor de artículos deportivos",
+      "cnae": "4764",
+      "empresas_2023": 4506,
+      "empresas_2024": 4372,
+      "distribucion_pct_2023": 10.9,
+      "distribucion_pct_2024": 10.0
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.1. Empresas vinculadas al deporte por actividad económica principal",
+      "sector": "Educación deportiva y recreativa",
+      "cnae": "8551",
+      "empresas_2023": 3753,
+      "empresas_2024": 4014,
+      "distribucion_pct_2023": 9.2,
+      "distribucion_pct_2024": 9.1
+    }
+  ]
+}

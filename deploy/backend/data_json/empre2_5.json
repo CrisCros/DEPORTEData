@@ -1,0 +1,88 @@
+{
+  "ids": [
+    "tabla_2.5_sector_total_2024",
+    "tabla_2.5_sector_931_2024",
+    "tabla_2.5_sector_323_2024",
+    "tabla_2.5_sector_4764_2024",
+    "tabla_2.5_sector_8551_2024"
+  ],
+  "documents": [
+    "En 2024, el total general de empresas vinculadas al deporte fue de 43.829. De estas, 16.390 no tenían asalariados, 20.892 tenían de 1 a 5 asalariados, 2.960 tenían de 6 a 9 asalariados, 3.167 tenían de 10 a 49 asalariados, 242 tenían de 50 a 99 asalariados, y 178 contaban con 100 o más asalariados.",
+    "En 2024, el sector de Actividades deportivas (CNAE 931) contaba con un total de 35.159 empresas. Su desglose por tamaño fue: 14.203 sin asalariados, 15.539 de 1 a 5 asalariados, 2.361 de 6 a 9 asalariados, 2.708 de 10 a 49 asalariados, 205 de 50 a 99 asalariados, y 143 con 100 o más asalariados.",
+    "En 2024, el sector de Fabricación de artículos de deporte (CNAE 323) contaba con un total de 284 empresas. Su desglose por tamaño fue: 114 sin asalariados, 102 de 1 a 5 asalariados, 14 de 6 a 9 asalariados, 48 de 10 a 49 asalariados, 3 de 50 a 99 asalariados, y 3 con 100 o más asalariados.",
+    "En 2024, el sector de Comercio al por menor de artículos deportivos (CNAE 4764) contaba con un total de 4.372 empresas. Su desglose por tamaño fue: 1.421 sin asalariados, 2.632 de 1 a 5 asalariados, 163 de 6 a 9 asalariados, 121 de 10 a 49 asalariados, 12 de 50 a 99 asalariados, y 23 con 100 o más asalariados.",
+    "En 2024, el sector de Educación deportiva y recreativa (CNAE 8551) contaba con un total de 4.014 empresas. Su desglose por tamaño fue: 652 sin asalariados, 2.619 de 1 a 5 asalariados, 422 de 6 a 9 asalariados, 290 de 10 a 49 asalariados, 22 de 50 a 99 asalariados, y 9 con 100 o más asalariados."
+  ],
+  "metadatas": [
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.5. Empresas vinculadas al deporte según número de asalariados",
+      "año": 2024,
+      "sector": "Total general",
+      "cnae": "TOTAL",
+      "total_empresas": 43829,
+      "sin_asalariados": 16390,
+      "de_1_a_5": 20892,
+      "de_6_a_9": 2960,
+      "de_10_a_49": 3167,
+      "de_50_a_99": 242,
+      "100_o_mas": 178
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.5. Empresas vinculadas al deporte según número de asalariados",
+      "año": 2024,
+      "sector": "Actividades deportivas",
+      "cnae": "931",
+      "total_empresas": 35159,
+      "sin_asalariados": 14203,
+      "de_1_a_5": 15539,
+      "de_6_a_9": 2361,
+      "de_10_a_49": 2708,
+      "de_50_a_99": 205,
+      "100_o_mas": 143
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.5. Empresas vinculadas al deporte según número de asalariados",
+      "año": 2024,
+      "sector": "Fabricación de artículos de deporte",
+      "cnae": "323",
+      "total_empresas": 284,
+      "sin_asalariados": 114,
+      "de_1_a_5": 102,
+      "de_6_a_9": 14,
+      "de_10_a_49": 48,
+      "de_50_a_99": 3,
+      "100_o_mas": 3
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.5. Empresas vinculadas al deporte según número de asalariados",
+      "año": 2024,
+      "sector": "Comercio al por menor de artículos deportivos",
+      "cnae": "4764",
+      "total_empresas": 4372,
+      "sin_asalariados": 1421,
+      "de_1_a_5": 2632,
+      "de_6_a_9": 163,
+      "de_10_a_49": 121,
+      "de_50_a_99": 12,
+      "100_o_mas": 23
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.5. Empresas vinculadas al deporte según número de asalariados",
+      "año": 2024,
+      "sector": "Educación deportiva y recreativa",
+      "cnae": "8551",
+      "total_empresas": 4014,
+      "sin_asalariados": 652,
+      "de_1_a_5": 2619,
+      "de_6_a_9": 422,
+      "de_10_a_49": 290,
+      "de_50_a_99": 22,
+      "100_o_mas": 9
+    }
+  ]
+}

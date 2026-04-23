@@ -1,0 +1,99 @@
+{
+  "ids": [
+    "dirce_conceptos_001",
+    "dirce_conceptos_002",
+    "dirce_conceptos_003",
+    "dirce_conceptos_004",
+    "dirce_conceptos_005",
+    "dirce_conceptos_006",
+    "dirce_conceptos_007",
+    "dirce_conceptos_008",
+    "dirce_conceptos_009",
+    "dirce_conceptos_010",
+    "dirce_conceptos_011",
+    "dirce_conceptos_012"
+  ],
+  "documents": [
+    "4. Principales conceptos. Actividad económica. En el DIRCE, la actividad económica principal se determina fundamentalmente a partir del epígrafe fiscal presente tanto en el Impuesto sobre Actividades Económicas como en Licencias Fiscales y del código de actividad económica que figura en las Cuentas de Cotización de la Seguridad Social. En el resto de las fuentes utilizadas, se entiende por actividad principal aquella que genera el mayor valor añadido. Ante la dificultad que supone para las empresas el cálculo del valor añadido cuando realizan varias actividades, se considera como actividad principal aquella que genera mayor cifra de negocios o, en su defecto, la que emplee un mayor número de personas ocupadas.",
+    "Empresa. Se corresponde con el concepto estadístico de empresa, la combinación más pequeña de unidades jurídicas que produce bienes o servicios y que disfruta de una cierta autonomía de decisión principalmente a la hora de emplear los recursos de los que dispone. De esta forma, una empresa puede llevar a cabo más de una actividad económica, puede estar presente en más de una ubicación y puede estar compuesta por una o más unidades legales.",
+    "Empresa vinculada al deporte. Se considera como tal aquella cuya actividad económica principal pertenece al ámbito deportivo, considerándose a los efectos de este capítulo las actividades señaladas en el epígrafe anterior.",
+    "Tamaño de la empresa. Medido en número de asalariados, se obtiene prioritariamente a través de las distintas encuestas económicas que realizan habitualmente el INE y otros Organismos.",
+    "Condición jurídica. La condición jurídica se determina fundamentalmente por la primera letra del identificador NIF, presente en todas las fuentes de entrada.",
+    "Clasificación geográfica. Se corresponde con la ubicación de la sede social de la empresa.",
+    "Cifra de negocios (o volumen de negocio). Comprende el total de los importes facturados por la unidad de observación durante el período de referencia por las ventas de bienes y servicios suministrados a terceros, considerando tanto los realizados directamente por la propia unidad de observación como los procedentes de eventuales subcontrataciones. Estas ventas de bienes o servicios se contabilizan en términos netos, es decir, incluyendo las cargas repercutidas al cliente (transporte, envases, etc.), aunque se facturen por separado, pero deduciendo los descuentos sobre ventas por pronto pago, las devoluciones de ventas o el valor de envases devueltos, así como los rappels sobre las ventas. Se incluyen los impuestos y tasas que gravan los bienes o servicios facturados por la unidad, pero se excluye el IVA repercutido al cliente.",
+    "Valor de la producción. Mide el importe de los bienes y servicios producidos por la empresa durante el ejercicio. Se define como la cifra de negocios, más o menos las variaciones de las existencias de productos terminados, trabajos en curso y bienes y servicios comprados para la reventa, menos las compras de bienes y servicios para la reventa, más los trabajos realizados por la empresa para su activo y los otros ingresos de gestión (excluidas las subvenciones).",
+    "Valor añadido a precios de mercado. Se calcula a partir del valor de la producción menos los gastos de explotación distintos de los destinados a la reventa (consumo de materias primas, productos intermedios y otros aprovisionamientos, y gastos en servicios exteriores).",
+    "Valor añadido a coste de los factores. Es la renta bruta de las actividades de explotación tras ajustar el efecto de las subvenciones de explotación y los impuestos indirectos. Se calcula a partir del valor añadido a precios de mercado, deduciendo todos los impuestos ligados a la producción y a los productos y sumando las subvenciones a la explotación.",
+    "Gastos de personal. Se entiende por gastos de personal el importe total agregado de los pagos efectuados por la empresa durante el año de referencia en concepto de sueldos y salarios, indemnizaciones, seguridad social y otros gastos de personal.",
+    "Inversión en activos materiales. Se incluyen los bienes de capital materiales, tanto nuevos como ya existentes, independientemente de si se han comprado a terceros, se han adquirido a través de un contrato de arrendamiento financiero (derecho a utilizar un bien duradero a cambio del pago de alquileres durante un plazo prolongado y predeterminado) o se han fabricado para autoconsumo (producción capitalizada de bienes de capital materiales), que tengan una vida útil superior a un año, incluidos los bienes materiales no fabricados, como la tierra. Se excluyen los bienes adquiridos a través de reestructuraciones (tales como fusiones, absorciones, fragmentaciones o separaciones). Se excluyen los costes de mantenimiento corrientes. Se trata de la inversión bruta durante el período de referencia en bienes materiales.",
+    "Personal ocupado. Conjunto de personas que, formando parte de la empresa, contribuyen mediante la aportación de su trabajo, sea remunerado o no, a las actividades de la misma. Se incluyen los propietarios que trabajan, los socios que trabajan con regularidad en la unidad y los familiares no remunerados que trabajan con regularidad en la unidad. También se incluyen las personas que, aunque trabajan fuera de empresa, pertenecen a ella y son retribuidas por ella. El personal ocupado comprende tanto el personal fijo como el eventual, ya sea a jornada completa como parcial. Incluye también tanto al personal remunerado como al no remunerado. La información se presenta en términos de media anual."
+  ],
+  "metadatas": [
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Actividad economica",
+      "criterios": "epigrafe fiscal, valor anadido, cifra de negocios, personal ocupado"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Empresa",
+      "caracteristicas": "autonomia de decision, unidades legales, produccion"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Empresa vinculada al deporte"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Tamano de la empresa",
+      "medida": "numero de asalariados"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Condicion juridica",
+      "indicador": "primera letra NIF"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Clasificacion geografica",
+      "indicador": "sede social"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Cifra de negocios",
+      "sinonimo": "volumen de negocio",
+      "incluye": "importes facturados, impuestos, tasas",
+      "excluye": "descuentos, devoluciones, IVA repercutido"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Valor de la produccion"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Valor anadido a precios de mercado",
+      "formula": "produccion menos gastos de explotacion"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Valor anadido a coste de los factores",
+      "formula": "valor anadido a precios de mercado menos impuestos mas subvenciones"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Gastos de personal",
+      "incluye": "sueldos, indemnizaciones, seguridad social"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Inversion en activos materiales",
+      "incluye": "bienes de capital, arrendamiento financiero, produccion autoconsumo",
+      "excluye": "reestructuraciones, mantenimiento corriente"
+    },
+    {
+      "capitulo": "4. Principales conceptos",
+      "concepto": "Personal ocupado",
+      "incluye": "propietarios, socios, familiares no remunerados, personal fijo, eventual"
+    }
+  ]
+}

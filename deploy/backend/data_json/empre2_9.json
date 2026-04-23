@@ -1,0 +1,76 @@
+{
+  "ids": [
+    "tabla_2.9_sector_9311",
+    "tabla_2.9_sector_9312",
+    "tabla_2.9_sector_9313",
+    "tabla_2.9_sector_9319"
+  ],
+  "documents": [
+    "En el subsector de Gestión de instalaciones deportivas (CNAE 9311), la cifra de negocio aumentó de 2.662.273 miles de euros en 2022 a 3.018.708 miles de euros en 2023. En 2023, el valor de la producción fue de 3.044.196 miles de euros, el valor añadido se situó en 1.678.983 miles de euros, los gastos de personal fueron de 1.211.770 miles de euros, y la inversión en activos materiales alcanzó los 260.092 miles de euros. El personal ocupado creció de 59.323 trabajadores en 2022 a 60.733 en 2023.",
+    "En el subsector de Actividades de los clubes deportivos (CNAE 9312), la cifra de negocio disminuyó de 6.783.803 miles de euros en 2022 a 6.432.227 miles de euros en 2023. En 2023, el valor de la producción fue de 5.356.729 miles de euros, el valor añadido alcanzó 3.603.356 miles de euros, los gastos de personal sumaron 3.298.867 miles de euros, y la inversión en activos materiales fue de 750.191 miles de euros. El personal ocupado descendió de 36.624 trabajadores en 2022 a 34.813 en 2023.",
+    "En el subsector de Actividades de los gimnasios (CNAE 9313), la cifra de negocio experimentó un fuerte crecimiento, pasando de 908.092 miles de euros en 2022 a 1.107.613 miles de euros en 2023. En 2023, el valor de la producción alcanzó 1.105.092 miles de euros, el valor añadido fue de 577.230 miles de euros, los gastos de personal fueron 353.189 miles de euros y la inversión en activos se situó en 140.546 miles de euros. El personal ocupado subió de 27.496 trabajadores en 2022 a 29.344 en 2023.",
+    "En el subsector de Otras actividades deportivas (CNAE 9319), la cifra de negocio aumentó de 1.997.750 miles de euros en 2022 a 2.447.865 miles de euros en 2023. En 2023, el valor de la producción se fijó en 2.320.390 miles de euros, el valor añadido fue de 988.533 miles de euros, los gastos de personal supusieron 422.751 miles de euros y la inversión en activos materiales fue de 65.672 miles de euros. El personal ocupado subió de 22.184 trabajadores en 2022 a 24.215 en 2023."
+  ],
+  "metadatas": [
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.9",
+      "sector": "Gestión de instalaciones deportivas",
+      "cnae": "9311",
+      "unidad_monetaria": "miles_de_euros",
+      "cifra_negocio_2022": 2662273,
+      "cifra_negocio_2023": 3018708,
+      "valor_produccion_2023": 3044196,
+      "valor_anadido_2023": 1678983,
+      "gastos_personal_2023": 1211770,
+      "inversion_activos_2023": 260092,
+      "personal_ocupado_2022": 59323,
+      "personal_ocupado_2023": 60733
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.9",
+      "sector": "Actividades de los clubes deportivos",
+      "cnae": "9312",
+      "unidad_monetaria": "miles_de_euros",
+      "cifra_negocio_2022": 6783803,
+      "cifra_negocio_2023": 6432227,
+      "valor_produccion_2023": 5356729,
+      "valor_anadido_2023": 3603356,
+      "gastos_personal_2023": 3298867,
+      "inversion_activos_2023": 750191,
+      "personal_ocupado_2022": 36624,
+      "personal_ocupado_2023": 34813
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.9",
+      "sector": "Actividades de los gimnasios",
+      "cnae": "9313",
+      "unidad_monetaria": "miles_de_euros",
+      "cifra_negocio_2022": 908092,
+      "cifra_negocio_2023": 1107613,
+      "valor_produccion_2023": 1105092,
+      "valor_anadido_2023": 577230,
+      "gastos_personal_2023": 353189,
+      "inversion_activos_2023": 140546,
+      "personal_ocupado_2022": 27496,
+      "personal_ocupado_2023": 29344
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.9",
+      "sector": "Otras actividades deportivas",
+      "cnae": "9319",
+      "unidad_monetaria": "miles_de_euros",
+      "cifra_negocio_2022": 1997750,
+      "cifra_negocio_2023": 2447865,
+      "valor_produccion_2023": 2320390,
+      "valor_anadido_2023": 988533,
+      "gastos_personal_2023": 422751,
+      "inversion_activos_2023": 65672,
+      "personal_ocupado_2022": 22184,
+      "personal_ocupado_2023": 24215
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "ids": [
+    "tabla_2.6_sector_total_2024",
+    "tabla_2.6_sector_931_2024",
+    "tabla_2.6_sector_323_2024",
+    "tabla_2.6_sector_4764_2024",
+    "tabla_2.6_sector_8551_2024"
+  ],
+  "documents": [
+    "En 2024, el total de 43.829 empresas deportivas en España se distribuía jurídicamente en 17.199 personas físicas, 14.613 sociedades (anónimas o de responsabilidad limitada) y 12.017 empresas con otras formas jurídicas.",
+    "En el sector de Actividades deportivas (CNAE 931), de un total de 35.159 empresas en 2024, 13.719 operaban como personas físicas, 10.587 como sociedades y 10.853 bajo otras formas jurídicas.",
+    "Para el sector de Fabricación de artículos de deporte (CNAE 323) en 2024, con un total de 284 empresas, la mayoría eran sociedades (193), seguidas de personas físicas (80) y solo 11 con otras formas jurídicas.",
+    "En el sector de Comercio al por menor de artículos deportivos (CNAE 4764) en 2024, de las 4.372 empresas existentes, 1.415 eran personas físicas, 2.711 eran sociedades y 246 tenían otras formas jurídicas.",
+    "En el sector de Educación deportiva y recreativa (CNAE 8551) en 2024, de las 4.014 empresas totales, 1.985 eran personas físicas, 1.122 eran sociedades y 907 operaban bajo otras formas jurídicas."
+  ],
+  "metadatas": [
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.6. Empresas por condición jurídica y actividad económica",
+      "año": 2024,
+      "sector": "Total general",
+      "cnae": "TOTAL",
+      "total_empresas": 43829,
+      "personas_fisicas": 17199,
+      "sociedades": 14613,
+      "otras_formas": 12017
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.6. Empresas por condición jurídica y actividad económica",
+      "año": 2024,
+      "sector": "Actividades deportivas",
+      "cnae": "931",
+      "total_empresas": 35159,
+      "personas_fisicas": 13719,
+      "sociedades": 10587,
+      "otras_formas": 10853
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.6. Empresas por condición jurídica y actividad económica",
+      "año": 2024,
+      "sector": "Fabricación de artículos de deporte",
+      "cnae": "323",
+      "total_empresas": 284,
+      "personas_fisicas": 80,
+      "sociedades": 193,
+      "otras_formas": 11
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.6. Empresas por condición jurídica y actividad económica",
+      "año": 2024,
+      "sector": "Comercio al por menor de artículos deportivos",
+      "cnae": "4764",
+      "total_empresas": 4372,
+      "personas_fisicas": 1415,
+      "sociedades": 2711,
+      "otras_formas": 246
+    },
+    {
+      "fuente": "dep_empre.pdf",
+      "tabla": "2.6. Empresas por condición jurídica y actividad económica",
+      "año": 2024,
+      "sector": "Educación deportiva y recreativa",
+      "cnae": "8551",
+      "total_empresas": 4014,
+      "personas_fisicas": 1985,
+      "sociedades": 1122,
+      "otras_formas": 907
+    }
+  ]
+}

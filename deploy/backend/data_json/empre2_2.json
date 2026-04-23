@@ -1,0 +1,29 @@
+{
+  "ids": [
+    "tabla_2.2_total",
+    "tabla_2.2_sin_asalariados",
+    "tabla_2.2_1_a_5",
+    "tabla_2.2_6_a_9",
+    "tabla_2.2_10_a_49",
+    "tabla_2.2_50_a_99",
+    "tabla_2.2_100_o_mas"
+  ],
+  "documents": [
+    "En 2024, el total de empresas deportivas en España ascendió a 43.829, un incremento respecto a las 41.180 empresas registradas en 2023.",
+    "En 2024, el número de empresas deportivas sin asalariados fue de 16.390, aumentando desde las 15.568 del año 2023.",
+    "Las empresas de pequeño tamaño (1 a 5 asalariados) pasaron de 19.476 en 2023 a 20.892 en el año 2024.",
+    "El segmento de empresas de 6 a 9 asalariados creció de 2.789 en 2023 a 2.960 en 2024.",
+    "Las empresas de tamaño mediano (10 a 49 asalariados) aumentaron su presencia, pasando de 2.959 en 2023 a 3.167 en 2024.",
+    "En 2024, se contabilizaron 242 empresas de entre 50 y 99 asalariados, frente a las 222 del año anterior.",
+    "Las empresas de mayor tamaño (100 o más asalariados) crecieron ligeramente, de 166 en 2023 a 178 en 2024."
+  ],
+  "metadatas": [
+    {"fuente": "dep_empre.pdf", "tabla": "2.2", "categoria": "Total", "2023": 41180, "2024": 43829},
+    {"fuente": "dep_empre.pdf", "tabla": "2.2", "categoria": "Sin asalariados", "2023": 15568, "2024": 16390},
+    {"fuente": "dep_empre.pdf", "tabla": "2.2", "categoria": "1 a 5 asalariados", "2023": 19476, "2024": 20892},
+    {"fuente": "dep_empre.pdf", "tabla": "2.2", "categoria": "6 a 9 asalariados", "2023": 2789, "2024": 2960},
+    {"fuente": "dep_empre.pdf", "tabla": "2.2", "categoria": "10 a 49 asalariados", "2023": 2959, "2024": 3167},
+    {"fuente": "dep_empre.pdf", "tabla": "2.2", "categoria": "50 a 99 asalariados", "2023": 222, "2024": 242},
+    {"fuente": "dep_empre.pdf", "tabla": "2.2", "categoria": "100 o más asalariados", "2023": 166, "2024": 178}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "ids": [
+    "tabla_2.3_personas_fisicas",
+    "tabla_2.3_sociedades",
+    "tabla_2.3_otras_formas"
+  ],
+  "documents": [
+    "En 2024, 17.199 empresas deportivas operaban como Personas Físicas, representando un aumento comparado con las 15.923 registradas en 2023.",
+    "El número de Sociedades Anónimas o de Responsabilidad Limitada vinculadas al deporte creció de 13.780 en 2023 a 14.613 en 2024.",
+    "Otras formas jurídicas en el sector deportivo pasaron de 11.477 empresas en 2023 a 12.017 empresas en 2024."
+  ],
+  "metadatas": [
+    {"fuente": "dep_empre.pdf", "tabla": "2.3", "juridico": "Personas físicas", "2023": 15923, "2024": 17199},
+    {"fuente": "dep_empre.pdf", "tabla": "2.3", "juridico": "Sociedades (S.A./S.L.)", "2023": 13780, "2024": 14613},
+    {"fuente": "dep_empre.pdf", "tabla": "2.3", "juridico": "Otras formas jurídicas", "2023": 11477, "2024": 12017}
+  ]
+}
